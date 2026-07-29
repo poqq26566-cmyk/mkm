@@ -218,7 +218,7 @@ fun AppInfoCard(
             Box(contentAlignment = Alignment.Center) {
                 Image(
                     painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                    contentDescription = "App Logo",
+                    contentDescription = "应用图标",
                     modifier = Modifier.size(80.dp)
                 )
             }
@@ -239,7 +239,7 @@ fun AppInfoCard(
         Spacer(modifier = Modifier.height(8.dp))
         Row(verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "Made with ",
+                text = "",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -250,7 +250,7 @@ fun AppInfoCard(
                 tint = Color.Red
             )
             Text(
-                text = " in Kotlin",
+                text = " 用 Kotlin 打造",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
