@@ -57,7 +57,7 @@ fun BatteryHistoryScreen(
             MediumTopAppBar(
                 title = {
                     Text(
-                        "Session History",
+                        "会话历史",
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Black
                     )
@@ -66,7 +66,7 @@ fun BatteryHistoryScreen(
                     IconButton(onClick = onBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = "返回"
                         )
                     }
                 },
@@ -75,7 +75,7 @@ fun BatteryHistoryScreen(
                         IconButton(onClick = { showClearDialog = true }) {
                             Icon(
                                 imageVector = Icons.Default.Delete,
-                                contentDescription = "Clear history",
+                                contentDescription = "清空历史",
                                 tint = MaterialTheme.colorScheme.error
                             )
                         }
@@ -135,12 +135,12 @@ private fun HistorySummary(records: List<com.ivarna.mkm.data.model.BatterySessio
         verticalArrangement = Arrangement.spacedBy(2.dp)
     ) {
         Text(
-            text = "${records.size} session${if (records.size == 1) "" else "s"} saved",
+            text = "已保存 ${records.size} 条会话",
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.SemiBold
         )
         Text(
-            text = "$charging charging · $discharging discharging",
+            text = "充电 $charging 次 · 放电 $discharging 次",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -163,14 +163,14 @@ private fun EmptyHistoryState(modifier: Modifier = Modifier) {
                 modifier = Modifier.padding(bottom = 16.dp)
             )
             Text(
-                text = "No sessions recorded yet",
+                text = "暂无记录的会话",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Sessions are saved automatically when you plug or unplug the charger, " +
-                    "and only when the battery percentage actually changes.",
+                text = "插拔充电器时会自动保存会话，" +
+                    "且仅在电量百分比实际发生变化时才会记录。",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
