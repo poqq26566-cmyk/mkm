@@ -75,14 +75,14 @@ fun RamScreen(viewModel: RamViewModel = viewModel(), onOpenDrawer: () -> Unit = 
                 MediumTopAppBar(
                     title = { 
                         Text(
-                            "RAM Management",
+                            "内存管理",
                             style = MaterialTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Black
                         )
                     },
                     navigationIcon = {
                          IconButton(onClick = onOpenDrawer) {
-                            Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                            Icon(Icons.Filled.Menu, contentDescription = "菜单")
                         }
                     },
                     actions = {
@@ -95,7 +95,7 @@ fun RamScreen(viewModel: RamViewModel = viewModel(), onOpenDrawer: () -> Unit = 
                 ExtendedFloatingActionButton(
                     onClick = { showSwapDialog = true },
                     icon = { Icon(Icons.Default.Add, contentDescription = null) },
-                    text = { Text("Create New Swap") },
+                    text = { Text("创建新的交换分区") },
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     contentColor = MaterialTheme.colorScheme.onPrimaryContainer
                 )
@@ -139,7 +139,7 @@ fun RamScreen(viewModel: RamViewModel = viewModel(), onOpenDrawer: () -> Unit = 
                                     modifier = Modifier.weight(1f)
                                 )
                                 TextButton(onClick = { viewModel.clearError() }) {
-                                    Text("Dismiss", color = MaterialTheme.colorScheme.error)
+                                    Text("关闭", color = MaterialTheme.colorScheme.error)
                                 }
                             }
                         }
@@ -150,7 +150,7 @@ fun RamScreen(viewModel: RamViewModel = viewModel(), onOpenDrawer: () -> Unit = 
                         
                         Spacer(modifier = Modifier.height(24.dp))
                         
-                        SectionHeader("Swap Configuration")
+                        SectionHeader("交换分区配置")
                         SwapConfigurationCard(
                             swap = data.swap,
                             onConfigureClick = { showSwapDialog = true },
@@ -159,7 +159,7 @@ fun RamScreen(viewModel: RamViewModel = viewModel(), onOpenDrawer: () -> Unit = 
                         )
                         
                         Spacer(modifier = Modifier.height(24.dp))
-                        SectionHeader("DDR Frequency Tuning")
+                        SectionHeader("DDR 频率调节")
                         DevfreqTuningCard(
                             devfreq = data.devfreq,
                             onGovernorSelected = { path, gov -> viewModel.setDevfreqGovernor(path, gov) },
@@ -168,7 +168,7 @@ fun RamScreen(viewModel: RamViewModel = viewModel(), onOpenDrawer: () -> Unit = 
                         
                         Spacer(modifier = Modifier.height(24.dp))
                         
-                        SectionHeader("Memory Details")
+                        SectionHeader("内存详情")
                         MemoryDetailsCard(data.memory)
                         
                         Spacer(modifier = Modifier.height(80.dp)) // Space for FAB
@@ -178,7 +178,7 @@ fun RamScreen(viewModel: RamViewModel = viewModel(), onOpenDrawer: () -> Unit = 
         }
 
         if (isProcessing) {
-            LoadingOverlay(message = "Processing...")
+            LoadingOverlay(message = "处理中…")
         }
     }
 }
@@ -219,7 +219,7 @@ fun MemoryOverviewCard(memory: MemoryStatus) {
             )
             Spacer(modifier = Modifier.height(12.dp))
             Text(
-                text = "${(memory.usagePercent * 100).toInt()}% Used · ${memory.freeUi} Free",
+                text = "已用 ${(memory.usagePercent * 100).toInt()}% · 剩余 ${memory.freeUi}",
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
             )
@@ -263,7 +263,7 @@ fun ActiveSwapContent(
     Row(verticalAlignment = Alignment.CenterVertically) {
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = "Swap Usage",
+                text = "交换分区使用情况",
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Bold
@@ -276,7 +276,7 @@ fun ActiveSwapContent(
         }
         Box {
             IconButton(onClick = { showMenu = true }) {
-                Icon(Icons.Default.MoreVert, contentDescription = "Swap options")
+                Icon(Icons.Default.MoreVert, contentDescription = "交换分区选项")
             }
             DropdownMenu(
                 expanded = showMenu,
@@ -286,14 +286,14 @@ fun ActiveSwapContent(
                 // Otherwise only show Create New (which is handled by FAB)
                 if (swap.path != "None") {
                     DropdownMenuItem(
-                        text = { Text("Disable Main Swap") },
+                        text = { Text("禁用主交换分区") },
                         onClick = {
                             onDisableClick()
                             showMenu = false
                         }
                     )
                     DropdownMenuItem(
-                        text = { Text("Delete Main Swap File") },
+                        text = { Text("删除主交换分区文件") },
                         onClick = {
                             onRemoveClick(swap.path)
                             showMenu = false
@@ -318,7 +318,7 @@ fun ActiveSwapContent(
     } else {
          // Fallback for when detailed info is missing but swap is active (shouldn't happen often)
         Text(
-            text = "Active: ${swap.path}",
+            text = "已启用：${swap.path}",
             style = MaterialTheme.typography.bodyMedium
         )
     }
@@ -331,7 +331,7 @@ fun ActiveSwapContent(
         onClick = onConfigureClick,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text("Create New Swap / Resize")
+        Text("创建新交换分区 / 调整大小")
     }
 }
 
@@ -360,7 +360,7 @@ fun SwapDeviceRow(device: SwapDeviceInfo, onRemove: () -> Unit) {
                 IconButton(onClick = onRemove) {
                     Icon(
                         imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete swap file",
+                        contentDescription = "删除交换分区文件",
                         tint = MaterialTheme.colorScheme.error
                     )
                 }
@@ -372,12 +372,12 @@ fun SwapDeviceRow(device: SwapDeviceInfo, onRemove: () -> Unit) {
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
              Text(
-                text = "${device.usedUi} used of ${device.sizeUi}",
+                text = "已用 ${device.usedUi} / 共 ${device.sizeUi}",
                 style = MaterialTheme.typography.bodySmall,
                  color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             Text(
-                text = "Prio: ${device.priority}",
+                text = "优先级：${device.priority}",
                  style = MaterialTheme.typography.labelSmall,
                  color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -392,20 +392,20 @@ fun NoSwapContent(onConfigureClick: () -> Unit) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "No Active Swap",
+            text = "暂无启用的交换分区",
             style = MaterialTheme.typography.titleMedium,
             fontWeight = FontWeight.Bold
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Create a swap file to increase available memory and improve system stability.",
+            text = "创建交换分区文件可增加可用内存、提升系统稳定性。",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(horizontal = 16.dp)
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = onConfigureClick) {
-            Text("Configure Swap")
+            Text("配置交换分区")
         }
     }
 }
@@ -421,15 +421,15 @@ fun MemoryDetailsCard(memory: MemoryStatus) {
         )
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            InfoRow(label = "Available", value = memory.availableUi)
+            InfoRow(label = "可用", value = memory.availableUi)
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
-            InfoRow(label = "Cached", value = memory.cachedUi)
+            InfoRow(label = "缓存", value = memory.cachedUi)
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
-            InfoRow(label = "Active", value = memory.activeUi)
+            InfoRow(label = "活跃", value = memory.activeUi)
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
-            InfoRow(label = "Inactive", value = memory.inactiveUi)
+            InfoRow(label = "非活跃", value = memory.inactiveUi)
             HorizontalDivider(modifier = Modifier.padding(vertical = 8.dp), color = MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f))
-            InfoRow(label = "Buffers", value = memory.buffersUi)
+            InfoRow(label = "缓冲区", value = memory.buffersUi)
         }
     }
 }
@@ -492,8 +492,8 @@ fun DevfreqTuningCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                  Column(modifier = Modifier.weight(1f)) {
-                    val title = if (devfreq.isSupported) "DDR Controller: ${devfreq.controllerPath.substringAfterLast("/")}" else "DDR Controller"
-                    val subtitle = if (devfreq.isSupported) devfreq.controllerPath else "Not detected or not supported"
+                    val title = if (devfreq.isSupported) "DDR 控制器：${devfreq.controllerPath.substringAfterLast("/")}" else "DDR 控制器"
+                    val subtitle = if (devfreq.isSupported) devfreq.controllerPath else "未检测到或不支持"
                     
                     Text(
                         text = title,
@@ -513,7 +513,7 @@ fun DevfreqTuningCard(
                 Spacer(modifier = Modifier.height(16.dp))
                 
                 Text(
-                    text = "Bandwidth Governor",
+                    text = "带宽调速器",
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.secondary
                 )
@@ -531,7 +531,7 @@ fun DevfreqTuningCard(
                         readOnly = true,
                         value = devfreq.currentGovernor,
                         onValueChange = {},
-                        label = { Text("Select Mode") },
+                        label = { Text("选择模式") },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                         colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
                     )
@@ -555,14 +555,14 @@ fun DevfreqTuningCard(
                 if (devfreq.availableFrequencies.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "Frequencies",
+                        text = "频率",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.secondary
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     
                     Text(
-                        text = "Current: ${devfreq.currentFreq}",
+                        text = "当前：${devfreq.currentFreq}",
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -581,7 +581,7 @@ fun DevfreqTuningCard(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "Changing DDR frequencies can cause immediate system reboots.",
+                                text = "修改 DDR 频率可能导致系统立即重启。",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onErrorContainer
                             )
@@ -600,9 +600,9 @@ fun DevfreqTuningCard(
                         OutlinedTextField(
                             modifier = Modifier.menuAnchor().fillMaxWidth(),
                             readOnly = true,
-                            value = devfreq.currentFreq.takeIf { it != "0" && it.isNotBlank() } ?: "Set Specific Frequency",
+                            value = devfreq.currentFreq.takeIf { it != "0" && it.isNotBlank() } ?: "设置特定频率",
                             onValueChange = {},
-                            label = { Text("Force Frequency (Userspace)") },
+                            label = { Text("强制频率（用户空间）") },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = freqExpanded) },
                             colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
                         )
@@ -627,7 +627,7 @@ fun DevfreqTuningCard(
                 if (devfreq.availableGovernors.isEmpty()) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "No governors found. This usually means the app was denied Root access.",
+                        text = "未找到调速器，通常是因为App未获得 Root 权限。",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.error
                     )
@@ -640,7 +640,7 @@ fun DevfreqTuningCard(
                         ) {
                             Column(modifier = Modifier.padding(8.dp)) {
                                 Text(
-                                    text = "Debug Info:",
+                                    text = "调试信息：",
                                     style = MaterialTheme.typography.labelSmall,
                                     fontWeight = FontWeight.Bold
                                 )
@@ -659,7 +659,7 @@ fun DevfreqTuningCard(
             } else {
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Could not find a supported DDR/Interconnect devfreq controller on this device.",
+                    text = "在此设备上未找到受支持的 DDR/互联 devfreq 控制器。",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.error
                 )
@@ -672,7 +672,7 @@ fun DevfreqTuningCard(
                     ) {
                         Column(modifier = Modifier.padding(8.dp)) {
                              Text(
-                                text = "Debug Info:",
+                                text = "调试信息：",
                                 style = MaterialTheme.typography.labelSmall,
                                 fontWeight = FontWeight.Bold
                             )
