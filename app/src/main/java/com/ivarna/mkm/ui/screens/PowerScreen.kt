@@ -51,7 +51,7 @@ fun PowerScreen(
     val realTimeLogs by viewModel.realTimeLogs.collectAsState()
 
     var selectedTab by remember { mutableIntStateOf(0) }
-    val tabs = listOf("Monitor", "CPU Bench", "GPU Bench")
+    val tabs = listOf("监控", "CPU 跑分", "GPU 跑分")
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
 
     val tabContainerColor by animateColorAsState(
@@ -85,18 +85,18 @@ fun PowerScreen(
             MediumTopAppBar(
                 navigationIcon = {
                      IconButton(onClick = onOpenDrawer) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                        Icon(Icons.Filled.Menu, contentDescription = "菜单")
                     }
                 },
                 title = {
                     Column {
                         Text(
-                            "Power Monitor",
+                            "功率监控",
                             style = MaterialTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Black
                         )
                         Text(
-                            "Efficiency & Benchmarks",
+                            "能效与跑分",
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold
@@ -213,7 +213,7 @@ fun MonitorTab(
         ) {
             Column(modifier = Modifier.padding(20.dp)) {
                 Text(
-                    text = "Update Frequency",
+                    text = "更新频率",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSecondaryContainer
@@ -221,15 +221,15 @@ fun MonitorTab(
                 Spacer(modifier = Modifier.height(8.dp))
                 
                 val intervalOptions = listOf(
-                    500L to "Fast (0.5s)",
-                    1000L to "Normal (1s)",
-                    2000L to "Slow (2s)"
+                    500L to "快 (0.5秒)",
+                    1000L to "正常 (1秒)",
+                    2000L to "慢 (2秒)"
                 )
                 
-                val currentLabel = intervalOptions.find { it.first == updateInterval }?.second ?: "Custom"
+                val currentLabel = intervalOptions.find { it.first == updateInterval }?.second ?: "自定义"
                 
                 Text(
-                    text = "Current: $currentLabel",
+                    text = "当前：$currentLabel",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.8f)
                 )
@@ -262,7 +262,7 @@ fun MonitorTab(
 
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            "Values are read directly from kernel power supply subsystem.",
+            "数值直接从内核电源子系统读取。",
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
@@ -295,7 +295,7 @@ fun CpuBenchTab(
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(
-                        text = "Debug Logs (Last 20 lines)",
+                        text = "调试日志（最近20行）",
                         style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 8.dp)
@@ -336,9 +336,9 @@ fun CpuBenchTab(
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(modifier = Modifier.padding(24.dp)) {
-                Text("CPU Efficiency", style = MaterialTheme.typography.headlineSmall)
+                Text("CPU 能效", style = MaterialTheme.typography.headlineSmall)
                 Text(
-                    "Calculates Score per Watt across clusters.",
+                    "计算各集群每瓦特得分。",
                     style = MaterialTheme.typography.bodyMedium
                 )
                 Spacer(modifier = Modifier.height(16.dp))
@@ -349,7 +349,7 @@ fun CpuBenchTab(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp)
                 ) {
-                   Text("Start Benchmark")
+                   Text("开始跑分")
                 }
                 
                 StatusMessage(status, onViewLogs, onViewRawData)
@@ -360,14 +360,14 @@ fun CpuBenchTab(
             Spacer(modifier = Modifier.height(16.dp))
             ElevatedCard(shape = RoundedCornerShape(24.dp)) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text("Efficiency Curve", style = MaterialTheme.typography.titleMedium)
+                    Text("能效曲线", style = MaterialTheme.typography.titleMedium)
                     Spacer(modifier = Modifier.height(8.dp))
                      // User requested: X = Wattage, Y = Score.
                      val points = results.map { it.powerW to it.score }
                      EfficiencyGraph(
                         dataPoints = points,
-                        xLabel = "Power (W)",
-                        yLabel = "Score",
+                        xLabel = "功率 (W)",
+                        yLabel = "得分",
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(250.dp)
@@ -397,9 +397,9 @@ fun GpuBenchTab(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Column(modifier = Modifier.padding(24.dp)) {
-                    Text("GPU Efficiency", style = MaterialTheme.typography.headlineSmall)
+                    Text("GPU 能效", style = MaterialTheme.typography.headlineSmall)
                     Text(
-                        "Measures Power vs Frequency under load.",
+                        "测量负载下的功率与频率关系。",
                         style = MaterialTheme.typography.bodyMedium
                     )
                     Spacer(modifier = Modifier.height(16.dp))
@@ -410,7 +410,7 @@ fun GpuBenchTab(
                         modifier = Modifier.fillMaxWidth(),
                          shape = RoundedCornerShape(12.dp)
                     ) {
-                        Text("Start Benchmark")
+                        Text("开始跑分")
                     }
                     
                     StatusMessage(status, onViewLogs, onViewRawData)
@@ -421,7 +421,7 @@ fun GpuBenchTab(
                 Spacer(modifier = Modifier.height(16.dp))
                  ElevatedCard(shape = RoundedCornerShape(24.dp)) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text("Power Curve", style = MaterialTheme.typography.titleMedium)
+                        Text("功率曲线", style = MaterialTheme.typography.titleMedium)
                         
                          // The user said Y axis score? 
                          // "x axis power and y axis score. and a curve of pwer efficiency we get"
@@ -436,8 +436,8 @@ fun GpuBenchTab(
                          val points = results.map { it.frequencyHz.toFloat() to it.powerW }
                          EfficiencyGraph(
                             dataPoints = points,
-                            xLabel = "Freq",
-                            yLabel = "Power",
+                            xLabel = "频率",
+                            yLabel = "功率",
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(250.dp)
@@ -470,10 +470,10 @@ fun StatusMessage(
             )
             Row {
                 TextButton(onClick = { onViewLogs(status.logs) }) {
-                    Text("View Logs")
+                    Text("查看日志")
                 }
                 TextButton(onClick = onViewRawData) {
-                    Text("View Raw Data")
+                    Text("查看原始数据")
                 }
             }
         }
@@ -486,7 +486,7 @@ fun StatusMessage(
                 style = MaterialTheme.typography.bodyMedium
             )
              TextButton(onClick = { onViewLogs(status.logs) }) {
-                Text("View Logs")
+                Text("查看日志")
             }
         }
     }
@@ -504,7 +504,7 @@ fun RealTimeProgressDialog(logs: String) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     CircularProgressIndicator(modifier = Modifier.size(24.dp), strokeWidth = 3.dp)
                     Spacer(modifier = Modifier.width(16.dp))
-                    Text("Running Benchmark...", style = MaterialTheme.typography.titleMedium)
+                    Text("正在运行跑分…", style = MaterialTheme.typography.titleMedium)
                 }
                 Spacer(modifier = Modifier.height(16.dp))
                 Box(
@@ -533,13 +533,13 @@ fun LogViewerDialog(logs: String, isRawData: Boolean, onDismiss: () -> Unit) {
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = if (isRawData) "Raw Data (CSV)" else "Benchmark Logs", 
+                    text = if (isRawData) "原始数据（CSV）" else "跑分日志", 
                     style = MaterialTheme.typography.titleMedium
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Box(modifier = Modifier.weight(1f).background(MaterialTheme.colorScheme.surfaceContainer, RoundedCornerShape(8.dp))) {
                     Text(
-                        text = logs.ifEmpty { "No data available." },
+                        text = logs.ifEmpty { "暂无数据。" },
                         style = MaterialTheme.typography.bodySmall.copy(fontFamily = FontFamily.Monospace),
                         modifier = Modifier.padding(8.dp).verticalScroll(rememberScrollState())
                     )
@@ -553,11 +553,11 @@ fun LogViewerDialog(logs: String, isRawData: Boolean, onDismiss: () -> Unit) {
                             clipboard.setPrimaryClip(clip)
                         }
                     ) {
-                        Text("Copy")
+                        Text("复制")
                     }
                     Spacer(modifier = Modifier.width(8.dp))
                     TextButton(onClick = onDismiss) {
-                        Text("Close")
+                        Text("关闭")
                     }
                 }
             }
