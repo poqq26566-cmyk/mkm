@@ -22,20 +22,20 @@ import androidx.compose.material.icons.outlined.VideogameAsset
 import androidx.compose.ui.graphics.vector.ImageVector
 
 sealed class Screen(val route: String, val label: String, val selectedIcon: ImageVector, val unselectedIcon: ImageVector) {
-    object Home : Screen("home", "Home", Icons.Filled.Home, Icons.Outlined.Home)
-    object RAM : Screen("ram", "RAM", Icons.Filled.Memory, Icons.Outlined.Memory)
+    object Home : Screen("home", "首页", Icons.Filled.Home, Icons.Outlined.Home)
+    object RAM : Screen("ram", "内存", Icons.Filled.Memory, Icons.Outlined.Memory)
     object CPU : Screen("cpu", "CPU", Icons.Filled.DeveloperBoard, Icons.Outlined.DeveloperBoard)
     object GPU : Screen("gpu", "GPU", Icons.Filled.VideogameAsset, Icons.Outlined.VideogameAsset)
-    object Storage : Screen("storage", "Storage", Icons.Filled.SdStorage, Icons.Outlined.SdStorage)
-    object Power : Screen("power", "Power", Icons.Filled.Bolt, Icons.Outlined.Bolt)
-    object Battery : Screen("battery", "Battery", Icons.Filled.BatteryFull, Icons.Outlined.BatteryFull)
-    object BatteryHistory : Screen("battery_history", "Session History", Icons.Filled.BatteryFull, Icons.Outlined.BatteryFull)
-    object NotificationSettings : Screen("notif_settings", "Notification Settings", Icons.Filled.BatteryFull, Icons.Outlined.BatteryFull)
-    object ChargingNotification : Screen("notif_charging", "Charging Notification", Icons.Filled.BatteryFull, Icons.Outlined.BatteryFull)
-    object DischargingNotification : Screen("notif_discharging", "Discharging Notification", Icons.Filled.BatteryFull, Icons.Outlined.BatteryFull)
-    object MonitoringNotification : Screen("notif_monitoring", "Monitoring", Icons.Filled.BatteryFull, Icons.Outlined.BatteryFull)
-    object Overlay : Screen("overlay", "Overlay", Icons.Filled.Layers, Icons.Outlined.Layers)
-    object Settings : Screen("settings", "Settings", Icons.Filled.Settings, Icons.Outlined.Settings)
+    object Storage : Screen("storage", "存储", Icons.Filled.SdStorage, Icons.Outlined.SdStorage)
+    object Power : Screen("power", "功率", Icons.Filled.Bolt, Icons.Outlined.Bolt)
+    object Battery : Screen("battery", "电池", Icons.Filled.BatteryFull, Icons.Outlined.BatteryFull)
+    object BatteryHistory : Screen("battery_history", "会话历史", Icons.Filled.BatteryFull, Icons.Outlined.BatteryFull)
+    object NotificationSettings : Screen("notif_settings", "通知设置", Icons.Filled.BatteryFull, Icons.Outlined.BatteryFull)
+    object ChargingNotification : Screen("notif_charging", "充电通知", Icons.Filled.BatteryFull, Icons.Outlined.BatteryFull)
+    object DischargingNotification : Screen("notif_discharging", "放电通知", Icons.Filled.BatteryFull, Icons.Outlined.BatteryFull)
+    object MonitoringNotification : Screen("notif_monitoring", "监控设置", Icons.Filled.BatteryFull, Icons.Outlined.BatteryFull)
+    object Overlay : Screen("overlay", "悬浮窗", Icons.Filled.Layers, Icons.Outlined.Layers)
+    object Settings : Screen("settings", "设置", Icons.Filled.Settings, Icons.Outlined.Settings)
 }
 
 val navItems = listOf(
