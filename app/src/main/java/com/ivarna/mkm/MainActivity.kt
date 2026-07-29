@@ -161,7 +161,7 @@ fun MainScreen(settingsViewModel: SettingsViewModel, homeViewModel: HomeViewMode
                 ) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                        contentDescription = "MKM Logo",
+                        contentDescription = "MKM 图标",
                         modifier = Modifier.size(48.dp)
                     )
                     Spacer(Modifier.width(12.dp))
@@ -191,7 +191,7 @@ fun MainScreen(settingsViewModel: SettingsViewModel, homeViewModel: HomeViewMode
                             {
                                 Icon(
                                     imageVector = Icons.Default.Lock,
-                                    contentDescription = "Locked",
+                                    contentDescription = "已锁定",
                                     modifier = Modifier.size(16.dp)
                                 )
                             }
@@ -213,7 +213,7 @@ fun MainScreen(settingsViewModel: SettingsViewModel, homeViewModel: HomeViewMode
                                     restoreState = true
                                 }
                             } else {
-                                android.widget.Toast.makeText(context, "Locked: Root or Shizuku access required", android.widget.Toast.LENGTH_SHORT).show()
+                                android.widget.Toast.makeText(context, "已锁定：需要 Root 或 Shizuku 权限", android.widget.Toast.LENGTH_SHORT).show()
                             }
                         },
                         modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding)
@@ -301,5 +301,5 @@ fun MainScreen(settingsViewModel: SettingsViewModel, homeViewModel: HomeViewMode
 
 @Composable
 fun PlaceholderScreen(name: String) {
-    Text(text = "$name Screen coming soon...", modifier = Modifier.padding(androidx.compose.foundation.layout.PaddingValues()))
+    Text(text = "$name 页面即将上线…", modifier = Modifier.padding(androidx.compose.foundation.layout.PaddingValues()))
 }
