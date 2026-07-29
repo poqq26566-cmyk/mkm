@@ -83,7 +83,7 @@ fun SessionHistoryRow(
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
                     Text(
-                        text = if (isCharging) "Charging" else "Discharging",
+                        text = if (isCharging) "充电中" else "放电中",
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold,
                         color = accent
@@ -112,7 +112,7 @@ fun SessionHistoryRow(
                 Spacer(modifier = Modifier.width(4.dp))
                 Icon(
                     imageVector = if (isExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                    contentDescription = if (isExpanded) "Collapse" else "Expand",
+                    contentDescription = if (isExpanded) "收起" else "展开",
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
@@ -125,52 +125,52 @@ fun SessionHistoryRow(
                     // Charging session metrics
                     if (record.avgWattageW > 0f) {
                         HistoryDetailRow(
-                            label = "Avg power",
+                            label = "平均功率",
                             value = "+${"%.2f".format(record.avgWattageW)} W"
                         )
                     }
                     if (record.avgCurrentMa > 0) {
                         HistoryDetailRow(
-                            label = "Avg current",
+                            label = "平均电流",
                             value = "${record.avgCurrentMa} mA"
                         )
                     }
                     HistoryDetailRow(
-                        label = "Avg temperature",
+                        label = "平均温度",
                         value = "${"%.1f".format(record.avgTemperatureC)}°C"
                     )
                     if (record.screenOnTimeMs > 0) {
                         HistoryDetailRow(
-                            label = "Screen on",
+                            label = "亮屏",
                             value = formatHistoryDuration(record.screenOnTimeMs)
                         )
                     }
                     if (record.screenOffTimeMs > 0) {
                         HistoryDetailRow(
-                            label = "Screen off",
+                            label = "熄屏",
                             value = formatHistoryDuration(record.screenOffTimeMs)
                         )
                     }
                 } else {
                     // Discharging session metrics
                     HistoryDetailRow(
-                        label = "Active drain",
+                        label = "使用中耗电",
                         value = "${"%.2f".format(record.activeDrainPerHr)}%/hr"
                     )
                     HistoryDetailRow(
-                        label = "Idle drain",
+                        label = "待机耗电",
                         value = "${"%.2f".format(record.idleDrainPerHr)}%/hr"
                     )
                     HistoryDetailRow(
-                        label = "Avg current",
+                        label = "平均电流",
                         value = "${record.avgCurrentMa} mA"
                     )
                     HistoryDetailRow(
-                        label = "Avg power",
+                        label = "平均功率",
                         value = "${"%.2f".format(record.avgWattageW)} W"
                     )
                     HistoryDetailRow(
-                        label = "Avg temperature",
+                        label = "平均温度",
                         value = "${"%.1f".format(record.avgTemperatureC)}°C"
                     )
                     // Absolute battery % drained per state
@@ -181,26 +181,26 @@ fun SessionHistoryRow(
                         return " · ~${(pct / 100f * capacityMah).toInt()} mAh"
                     }
                     HistoryDetailRow(
-                        label = "Screen on",
+                        label = "亮屏",
                         value = formatHistoryDuration(record.screenOnTimeMs) +
                                 if (record.screenOnDrainPercent > 0f)
                                     " · −${"%.1f".format(record.screenOnDrainPercent)}%${pctToMah(record.screenOnDrainPercent)}" else ""
                     )
                     HistoryDetailRow(
-                        label = "Screen off",
+                        label = "熄屏",
                         value = formatHistoryDuration(record.screenOffTimeMs) +
                                 if (record.screenOffDrainPercent > 0f)
                                     " · −${"%.1f".format(record.screenOffDrainPercent)}%${pctToMah(record.screenOffDrainPercent)}" else ""
                     )
                     HistoryDetailRow(
-                        label = "Deep sleep",
+                        label = "深度睡眠",
                         value = formatHistoryDuration(record.deepSleepTimeMs) +
                                 if (record.deepSleepDrainPercent > 0f)
                                     " · −${"%.2f".format(record.deepSleepDrainPercent)}%${pctToMah(record.deepSleepDrainPercent)}" else ""
                     )
                     if (record.awakeTimeMs > 0) {
                         HistoryDetailRow(
-                            label = "Awake",
+                            label = "唤醒",
                             value = formatHistoryDuration(record.awakeTimeMs) +
                                     if (record.awakeDrainPercent > 0f)
                                         " · −${"%.2f".format(record.awakeDrainPercent)}%${pctToMah(record.awakeDrainPercent)}" else ""
@@ -249,21 +249,21 @@ fun ClearHistoryDialog(
                 tint = MaterialTheme.colorScheme.error
             )
         },
-        title = { Text("Clear session history?") },
+        title = { Text("清空会话历史？") },
         text = {
             Text(
-                "This will permanently remove all $count saved session${if (count == 1) "" else "s"}. " +
-                    "This action cannot be undone."
+                "这将永久删除全部 $count 条已保存的会话。" +
+                    "此操作无法撤销。"
             )
         },
         confirmButton = {
             TextButton(onClick = onConfirm) {
-                Text("Clear", color = MaterialTheme.colorScheme.error)
+                Text("清空", color = MaterialTheme.colorScheme.error)
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text("取消")
             }
         }
     )
