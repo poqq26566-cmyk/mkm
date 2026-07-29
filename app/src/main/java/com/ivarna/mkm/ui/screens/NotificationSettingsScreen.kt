@@ -44,12 +44,12 @@ data class NotifOption(
 // ---------------------------------------------------------------------------
 
 private val headingOptions = listOf(
-    NotifOption(BatteryMonitorService.PREF_NOTIF_SHOW_WATTAGE, "Wattage", true, "Show W reading in title"),
-    NotifOption(BatteryMonitorService.PREF_NOTIF_SHOW_TEMPERATURE, "Temperature", false, "Show °C in title"),
-    NotifOption(BatteryMonitorService.PREF_NOTIF_SHOW_DRAIN, "Drain Rate", false, "Show %/hr in title"),
-    NotifOption(BatteryMonitorService.PREF_NOTIF_SHOW_TIME_LEFT, "Time Left", false, "Remaining / full estimate in title"),
-    NotifOption(BatteryMonitorService.PREF_NOTIF_SHOW_CURRENT, "Current (mA)", false, "Show current in title"),
-    NotifOption(BatteryMonitorService.PREF_NOTIF_SHOW_VOLTAGE, "Voltage (mV)", false, "Show voltage in title"),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_SHOW_WATTAGE, "功率", true, "在标题中显示瓦数"),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_SHOW_TEMPERATURE, "温度", false, "在标题中显示摄氏度"),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_SHOW_DRAIN, "耗电速率", false, "在标题中显示 %/小时"),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_SHOW_TIME_LEFT, "剩余时间", false, "在标题中显示剩余/充满预估时间"),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_SHOW_CURRENT, "电流 (mA)", false, "在标题中显示电流"),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_SHOW_VOLTAGE, "电压 (mV)", false, "在标题中显示电压"),
 )
 
 // ---------------------------------------------------------------------------
@@ -57,15 +57,15 @@ private val headingOptions = listOf(
 // ---------------------------------------------------------------------------
 
 private val dischargingExpandedOptions = listOf(
-    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_TEMP_VOLTAGE, "Temperature & Voltage", true),
-    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_POWER, "Power (Wattage)", true),
-    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_DRAIN, "Drain Rates", true),
-    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_TIME_LEFT, "Time Remaining", true),
-    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_SCREEN_ON, "Screen On", true),
-    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_SCREEN_OFF, "Screen Off", true),
-    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_DEEP_SLEEP, "Deep Sleep", true),
-    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_AWAKE, "Awake", true),
-    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_SHOW_MAH, "Show mAh (capacity estimate)", false, "Append estimated mAh to each stat"),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_TEMP_VOLTAGE, "温度与电压", true),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_POWER, "功率（瓦数）", true),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_DRAIN, "耗电速率", true),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_TIME_LEFT, "剩余时间", true),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_SCREEN_ON, "亮屏时长", true),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_SCREEN_OFF, "熄屏时长", true),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_DEEP_SLEEP, "深度睡眠", true),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_AWAKE, "唤醒时长", true),
+    NotifOption(BatteryMonitorService.PREF_NOTIF_EXP_SHOW_MAH, "显示 mAh（容量估算）", false, "在每项数据后附加估算的 mAh 值"),
 )
 
 // Charging expanded options — these always show unconditionally from the manager,
@@ -94,14 +94,14 @@ fun NotificationSettingsScreen(
             MediumTopAppBar(
                 title = {
                     Text(
-                        "Notification Settings",
+                        "通知设置",
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Black
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "返回")
                     }
                 },
                 scrollBehavior = scrollBehavior
@@ -122,22 +122,22 @@ fun NotificationSettingsScreen(
             NotifSettingsNavCard(
                 icon = Icons.Default.Power,
                 iconTint = Color(0xFF4CAF50),
-                title = "Charging",
-                subtitle = "Customise the notification while charging",
+                title = "充电中",
+                subtitle = "自定义充电时的通知内容",
                 onClick = onOpenCharging
             )
             NotifSettingsNavCard(
                 icon = Icons.Default.BatteryStd,
                 iconTint = MaterialTheme.colorScheme.primary,
-                title = "Discharging",
-                subtitle = "Customise the notification while on battery",
+                title = "放电中",
+                subtitle = "自定义使用电池时的通知内容",
                 onClick = onOpenDischarging
             )
             NotifSettingsNavCard(
                 icon = Icons.Default.Timer,
                 iconTint = MaterialTheme.colorScheme.secondary,
-                title = "Monitoring",
-                subtitle = "Refresh interval and heading options",
+                title = "监控设置",
+                subtitle = "刷新间隔与标题选项",
                 onClick = onOpenMonitoring
             )
 
@@ -163,12 +163,12 @@ fun ChargingNotificationSettingsScreen(onBack: () -> Unit) {
     // We add charging-specific prefs here for forward-compat.
 
     val chargingOptions = listOf(
-        NotifOption("notif_chg_show_power", "Charging Power (W)", true, "Show watts in expanded view"),
-        NotifOption("notif_chg_show_current", "Current (mA)", true, "Show instant + avg current"),
-        NotifOption("notif_chg_show_temp", "Temperature & Voltage", true, "Show °C and mV"),
-        NotifOption("notif_chg_show_gained", "Gained %", true, "Show % gained since plug-in"),
-        NotifOption("notif_chg_show_duration", "Charging Duration", true, "Time since charger connected"),
-        NotifOption("notif_chg_show_time_full", "Est. Time to Full", true, "Estimated minutes until 100%"),
+        NotifOption("notif_chg_show_power", "充电功率 (W)", true, "在展开视图中显示瓦数"),
+        NotifOption("notif_chg_show_current", "电流 (mA)", true, "显示瞬时电流和平均电流"),
+        NotifOption("notif_chg_show_temp", "温度与电压", true, "显示摄氏度和毫伏"),
+        NotifOption("notif_chg_show_gained", "增加百分比", true, "显示插入充电器后增加的百分比"),
+        NotifOption("notif_chg_show_duration", "充电时长", true, "自充电器连接以来的时间"),
+        NotifOption("notif_chg_show_time_full", "预计充满时间", true, "预计到达100%所需的分钟数"),
     )
 
     var selections by remember {
@@ -189,14 +189,14 @@ fun ChargingNotificationSettingsScreen(onBack: () -> Unit) {
             MediumTopAppBar(
                 title = {
                     Text(
-                        "Charging Notification",
+                        "充电通知",
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Black
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "返回")
                     }
                 },
                 scrollBehavior = scrollBehavior
@@ -214,8 +214,8 @@ fun ChargingNotificationSettingsScreen(onBack: () -> Unit) {
         ) {
             Spacer(modifier = Modifier.height(4.dp))
             NotifSectionCard(
-                title = "Expanded Content",
-                subtitle = "Shown when the notification is expanded",
+                title = "展开内容",
+                subtitle = "通知展开时显示的内容",
                 iconTint = Color(0xFF4CAF50),
                 options = chargingOptions,
                 selections = selections,
@@ -255,14 +255,14 @@ fun DischargingNotificationSettingsScreen(onBack: () -> Unit) {
             MediumTopAppBar(
                 title = {
                     Text(
-                        "Discharging Notification",
+                        "放电通知",
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Black
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "返回")
                     }
                 },
                 scrollBehavior = scrollBehavior
@@ -280,8 +280,8 @@ fun DischargingNotificationSettingsScreen(onBack: () -> Unit) {
         ) {
             Spacer(modifier = Modifier.height(4.dp))
             NotifSectionCard(
-                title = "Expanded Content",
-                subtitle = "Shown when the notification is expanded while on battery",
+                title = "展开内容",
+                subtitle = "使用电池时通知展开的内容",
                 iconTint = MaterialTheme.colorScheme.primary,
                 options = dischargingExpandedOptions,
                 selections = selections,
@@ -314,12 +314,12 @@ fun MonitoringNotificationSettingsScreen(onBack: () -> Unit) {
 
     // Refresh interval
     val intervalOptions = listOf(
-        "5s" to 5_000L,
-        "10s" to 10_000L,
-        "30s" to 30_000L,
-        "1 min" to 60_000L,
-        "5 min" to 300_000L,
-        "10 min" to 600_000L
+        "5秒" to 5_000L,
+        "10秒" to 10_000L,
+        "30秒" to 30_000L,
+        "1分钟" to 60_000L,
+        "5分钟" to 300_000L,
+        "10分钟" to 600_000L
     )
     var selectedIntervalMs by remember {
         mutableStateOf(prefs.getLong("battery_update_interval_ms", BatterySessionTracker.DEFAULT_UPDATE_INTERVAL_MS))
@@ -336,14 +336,14 @@ fun MonitoringNotificationSettingsScreen(onBack: () -> Unit) {
             MediumTopAppBar(
                 title = {
                     Text(
-                        "Monitoring",
+                        "监控设置",
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Black
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "返回")
                     }
                 },
                 scrollBehavior = scrollBehavior
@@ -377,12 +377,12 @@ fun MonitoringNotificationSettingsScreen(onBack: () -> Unit) {
                             Icon(Icons.Default.Timer, contentDescription = null, modifier = Modifier.size(20.dp), tint = MaterialTheme.colorScheme.primary)
                             Spacer(modifier = Modifier.width(12.dp))
                             Column {
-                                Text("Refresh Interval", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold)
-                                Text("How often battery stats update", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Text("刷新间隔", style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold)
+                                Text("电池数据的更新频率", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                         }
                         Box {
-                            val currentLabel = intervalOptions.find { it.second == selectedIntervalMs }?.first ?: "30s"
+                            val currentLabel = intervalOptions.find { it.second == selectedIntervalMs }?.first ?: "30秒"
                             AssistChip(
                                 onClick = { intervalMenuExpanded = true },
                                 label = { Text(currentLabel) },
@@ -409,7 +409,7 @@ fun MonitoringNotificationSettingsScreen(onBack: () -> Unit) {
                     }
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "Longer intervals reduce MKM's own battery usage.",
+                        "更长的间隔可降低 MKM 自身的耗电。",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                     )
@@ -418,8 +418,8 @@ fun MonitoringNotificationSettingsScreen(onBack: () -> Unit) {
 
             // Notification heading toggles
             NotifSectionCard(
-                title = "Notification Heading",
-                subtitle = "Items shown in the notification title bar",
+                title = "通知标题",
+                subtitle = "在通知标题栏中显示的项目",
                 iconTint = MaterialTheme.colorScheme.secondary,
                 options = headingOptions,
                 selections = headingSelections,
