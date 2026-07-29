@@ -76,14 +76,14 @@ fun HomeScreen(
             MediumTopAppBar(
                 title = {
                     Text(
-                        "Minimal Kernel Manager",
+                        "极简内核管理器",
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Black
                     )
                 },
                 navigationIcon = {
                      IconButton(onClick = onOpenDrawer) {
-                         Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                         Icon(Icons.Filled.Menu, contentDescription = "菜单")
                      }
                 },
                 scrollBehavior = scrollBehavior
@@ -109,7 +109,7 @@ fun HomeScreen(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                SectionHeader("QUICK STATUS MONITOR")
+                SectionHeader("快速状态监控")
 
                 QuickStatsGrid(data)
 
@@ -156,7 +156,7 @@ fun SystemOverviewCard(
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                     Text(
-                        text = "Kernel: ${overview.kernelVersion}",
+                        text = "内核：${overview.kernelVersion}",
                         style = MaterialTheme.typography.bodyLarge,
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
                     )
@@ -190,7 +190,7 @@ fun SystemOverviewCard(
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Text(
-                        text = "Access denied. Please enable Shizuku or grant Root access to use all features.",
+                        text = "访问被拒绝。请启用 Shizuku 或授予 Root 权限以使用全部功能。",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onErrorContainer,
                         modifier = Modifier.padding(12.dp)
@@ -225,7 +225,7 @@ fun StatusBadge(label: String, isActive: Boolean, modifier: Modifier = Modifier)
             )
             Spacer(modifier = Modifier.width(6.dp))
             Text(
-                text = "$label: ${if (isActive) "Active" else "Inactive"}",
+                text = "$label：${if (isActive) "已激活" else "未激活"}",
                 style = MaterialTheme.typography.labelLarge,
                 color = color,
                 fontWeight = FontWeight.Bold
@@ -239,9 +239,9 @@ fun QuickStatsGrid(data: HomeData) {
     Column {
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
             StatCard(
-                title = "RAM",
+                title = "内存",
                 value = "${data.memory.usedUi} / ${data.memory.totalUi}",
-                subValue = "${(data.memory.usagePercent * 100).toInt()}% Used",
+                subValue = "已用 ${(data.memory.usagePercent * 100).toInt()}%",
                 progress = data.memory.usagePercent,
                 icon = Icons.Default.Dns,
                 modifier = Modifier.weight(1f)
@@ -249,7 +249,7 @@ fun QuickStatsGrid(data: HomeData) {
             StatCard(
                 title = "CPU",
                 value = "${(data.cpu.overallUsage * 100).toInt()}%",
-                subValue = "${data.cpu.totalCores} Cores Active",
+                subValue = "${data.cpu.totalCores} 核心运行中",
                 progress = data.cpu.overallUsage,
                 icon = Icons.Default.DeveloperBoard,
                 modifier = Modifier.weight(1f)
@@ -261,17 +261,17 @@ fun QuickStatsGrid(data: HomeData) {
                 title = "GPU",
                 value = data.gpu.currentFreq,
                 subValue = if (!data.gpu.frequencyAvailable && data.gpu.freqRequiresRoot)
-                    "${(data.gpu.loadPercent * 100).toInt()}% Load • Root needed for freq"
+                    "负载 ${(data.gpu.loadPercent * 100).toInt()}% • 频率需要 Root 权限"
                 else
-                    "${(data.gpu.loadPercent * 100).toInt()}% Load",
+                    "负载 ${(data.gpu.loadPercent * 100).toInt()}%",
                 progress = data.gpu.loadPercent,
                 icon = Icons.Default.VideogameAsset,
                 modifier = Modifier.weight(1f)
             )
             StatCard(
-                title = "Swap",
+                title = "交换分区",
                 value = data.swap.totalUi,
-                subValue = if (data.swap.isActive) "Active (${(data.swap.usagePercent * 100).toInt()}%)" else "Inactive",
+                subValue = if (data.swap.isActive) "已启用 (${(data.swap.usagePercent * 100).toInt()}%)" else "未启用",
                 progress = data.swap.usagePercent,
                 icon = Icons.Default.SwapHoriz,
                 modifier = Modifier.weight(1f)
@@ -289,14 +289,14 @@ fun QuickAccessCard(
     val context = LocalContext.current
     val alwaysEnabled = setOf("battery", "overlay", "settings")
     val items = listOf(
-        QuickAccessItem("RAM", "ram", Icons.Default.Dns),
+        QuickAccessItem("内存", "ram", Icons.Default.Dns),
         QuickAccessItem("CPU", "cpu", Icons.Default.DeveloperBoard),
         QuickAccessItem("GPU", "gpu", Icons.Default.VideogameAsset),
-        QuickAccessItem("Storage", "storage", Icons.Default.SdStorage),
-        QuickAccessItem("Power", "power", Icons.Default.Bolt),
-        QuickAccessItem("Battery", "battery", Icons.Default.BatteryFull),
-        QuickAccessItem("Overlay", "overlay", Icons.Default.SwapHoriz),
-        QuickAccessItem("Settings", "settings", Icons.Default.Settings)
+        QuickAccessItem("存储", "storage", Icons.Default.SdStorage),
+        QuickAccessItem("电源", "power", Icons.Default.Bolt),
+        QuickAccessItem("电池", "battery", Icons.Default.BatteryFull),
+        QuickAccessItem("悬浮窗", "overlay", Icons.Default.SwapHoriz),
+        QuickAccessItem("设置", "settings", Icons.Default.Settings)
     )
 
     Card(
@@ -310,7 +310,7 @@ fun QuickAccessCard(
         Column(modifier = Modifier.padding(14.dp)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "QUICK ACCESS",
+                    text = "快捷入口",
                     style = MaterialTheme.typography.labelLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -333,7 +333,7 @@ fun QuickAccessCard(
                             )
                             Spacer(Modifier.width(4.dp))
                             Text(
-                                text = "Limited",
+                                text = "受限",
                                 style = MaterialTheme.typography.labelSmall,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onErrorContainer
@@ -361,7 +361,7 @@ fun QuickAccessCard(
                             } else {
                                 android.widget.Toast.makeText(
                                     context,
-                                    "Locked: Root or Shizuku access required",
+                                    "已锁定：需要 Root 或 Shizuku 权限",
                                     android.widget.Toast.LENGTH_SHORT
                                 ).show()
                             }
@@ -436,7 +436,7 @@ private fun QuickAccessTile(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Lock,
-                        contentDescription = "Locked",
+                        contentDescription = "已锁定",
                         modifier = Modifier
                             .padding(2.dp)
                             .size(10.dp),
