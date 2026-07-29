@@ -152,10 +152,10 @@ class BootApplyService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Boot Settings",
+                "开机设置",
                 NotificationManager.IMPORTANCE_LOW
             ).apply {
-                description = "Countdown before applying kernel settings on boot"
+                description = "开机后应用内核设置前的倒计时"
                 setShowBadge(false)
             }
             val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -166,8 +166,8 @@ class BootApplyService : Service() {
     private fun buildCountdownNotification(seconds: Int): Notification {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_stat_battery)
-            .setContentTitle("MKM Boot Settings")
-            .setContentText("Applying settings in ${seconds}s...")
+            .setContentTitle("MKM 开机设置")
+            .setContentText("将在 ${seconds} 秒后应用设置…")
             .setProgress(COUNTDOWN_SECONDS, COUNTDOWN_SECONDS - seconds, false)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setOngoing(true)
@@ -181,8 +181,8 @@ class BootApplyService : Service() {
         val elapsed = COUNTDOWN_SECONDS - secondsRemaining
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_stat_battery)
-            .setContentTitle("MKM Boot Settings")
-            .setContentText("Applying settings in ${secondsRemaining}s...")
+            .setContentTitle("MKM 开机设置")
+            .setContentText("将在 ${secondsRemaining} 秒后应用设置…")
             .setProgress(COUNTDOWN_SECONDS, elapsed, false)
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setOngoing(true)
@@ -196,8 +196,8 @@ class BootApplyService : Service() {
         val nm = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val notification = NotificationCompat.Builder(this, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_stat_battery)
-            .setContentTitle("MKM Boot Settings")
-            .setContentText("Settings applied successfully.")
+            .setContentTitle("MKM 开机设置")
+            .setContentText("设置已成功应用。")
             .setPriority(NotificationCompat.PRIORITY_LOW)
             .setOngoing(false)
             .setOnlyAlertOnce(true)
