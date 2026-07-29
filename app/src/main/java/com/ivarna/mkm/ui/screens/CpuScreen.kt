@@ -54,7 +54,7 @@ fun CpuScreen(viewModel: CpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
             MediumTopAppBar(
                 navigationIcon = {
                      IconButton(onClick = onOpenDrawer) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                        Icon(Icons.Filled.Menu, contentDescription = "菜单")
                     }
                 },
                 title = {
@@ -65,7 +65,7 @@ fun CpuScreen(viewModel: CpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
                             fontWeight = FontWeight.Black
                         )
                         Text(
-                            "CPU Management",
+                            "CPU 管理",
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold
@@ -99,10 +99,10 @@ fun CpuScreen(viewModel: CpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
             ) {
             item {
                 HeroUsageCard(
-                    title = "OVERALL UTILIZATION",
+                    title = "整体利用率",
                     usage = cpuStatus.overallUsage,
                     mainValue = "${(cpuStatus.overallUsage * 100).toInt()}%",
-                    subValue = "${cpuStatus.totalCores} Processors Active"
+                    subValue = "${cpuStatus.totalCores} 个处理器运行中"
                 )
             }
 
@@ -130,7 +130,7 @@ fun CpuScreen(viewModel: CpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
             }
 
             item {
-                SectionHeader("CPU Clusters")
+                SectionHeader("CPU 集群")
             }
 
             items(cpuStatus.clusters) { cluster ->
@@ -143,7 +143,7 @@ fun CpuScreen(viewModel: CpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
             }
 
             item {
-                SectionHeader("Core Status Monitoring")
+                SectionHeader("核心状态监控")
             }
 
             item {
@@ -158,7 +158,7 @@ fun CpuScreen(viewModel: CpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
         // Selection sheets
         selectedClusterForGovernor?.let { cluster ->
             SelectionBottomSheet(
-                title = "Select Governor",
+                title = "选择调速器",
                 items = cluster.availableGovernors,
                 selectedItem = cluster.governor,
                 onDismiss = { selectedClusterForGovernor = null },
@@ -171,7 +171,7 @@ fun CpuScreen(viewModel: CpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
 
         selectedClusterForMaxFreq?.let { cluster ->
             SelectionBottomSheet(
-                title = "Select Max Frequency",
+                title = "选择最高频率",
                 items = cluster.availableFrequencies,
                 selectedItem = cluster.rawMaxFreq,
                 onDismiss = { selectedClusterForMaxFreq = null },
@@ -185,7 +185,7 @@ fun CpuScreen(viewModel: CpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
 
         selectedClusterForMinFreq?.let { cluster ->
             SelectionBottomSheet(
-                title = "Select Min Frequency",
+                title = "选择最低频率",
                 items = cluster.availableFrequencies,
                 selectedItem = cluster.rawMinFreq,
                 onDismiss = { selectedClusterForMinFreq = null },
@@ -210,7 +210,7 @@ fun CpuScreen(viewModel: CpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
                         .padding(bottom = 48.dp)
                 ) {
                     Text(
-                        text = "Core ${core.id} Settings",
+                        text = "核心 ${core.id} 设置",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(bottom = 24.dp)
@@ -218,17 +218,17 @@ fun CpuScreen(viewModel: CpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
 
                     Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                         SettingRow(
-                            label = "GOVERNOR",
+                            label = "调速器",
                             value = core.governor,
                             onClick = { showCoreGovernorSheet = true }
                         )
                         SettingRow(
-                            label = "MAX FREQUENCY",
+                            label = "最高频率",
                             value = core.maxFreq,
                             onClick = { showCoreMaxFreqSheet = true }
                         )
                         SettingRow(
-                            label = "MIN FREQUENCY",
+                            label = "最低频率",
                             value = core.minFreq,
                             onClick = { showCoreMinFreqSheet = true }
                         )
@@ -238,7 +238,7 @@ fun CpuScreen(viewModel: CpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
 
             if (showCoreGovernorSheet) {
                 SelectionBottomSheet(
-                    title = "Core ${core.id} Governor",
+                    title = "核心 ${core.id} 调速器",
                     items = core.availableGovernors,
                     selectedItem = core.governor,
                     onDismiss = { showCoreGovernorSheet = false },
@@ -251,7 +251,7 @@ fun CpuScreen(viewModel: CpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
 
             if (showCoreMaxFreqSheet) {
                 SelectionBottomSheet(
-                    title = "Core ${core.id} Max Frequency",
+                    title = "核心 ${core.id} 最高频率",
                     items = core.availableFrequencies,
                     selectedItem = core.rawMaxFreq,
                     onDismiss = { showCoreMaxFreqSheet = false },
@@ -265,7 +265,7 @@ fun CpuScreen(viewModel: CpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
 
             if (showCoreMinFreqSheet) {
                 SelectionBottomSheet(
-                    title = "Core ${core.id} Min Frequency",
+                    title = "核心 ${core.id} 最低频率",
                     items = core.availableFrequencies,
                     selectedItem = core.rawMinFreq,
                     onDismiss = { showCoreMinFreqSheet = false },
@@ -301,7 +301,7 @@ fun CpuClusterCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Cluster ${cluster.id}",
+                    text = "集群 ${cluster.id}",
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
@@ -310,7 +310,7 @@ fun CpuClusterCard(
                     color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.5f)
                 ) {
                     Text(
-                        text = "Cores ${cluster.coreRange.first}-${cluster.coreRange.last}",
+                        text = "核心 ${cluster.coreRange.first}-${cluster.coreRange.last}",
                         modifier = Modifier.padding(horizontal = 8.dp, vertical = 4.dp),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onPrimaryContainer
@@ -322,22 +322,22 @@ fun CpuClusterCard(
             
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
                 SettingRow(
-                    label = "GOVERNOR",
+                    label = "调速器",
                     value = cluster.governor,
                     onClick = onGovernorClick
                 )
                 SettingRow(
-                    label = "MAX FREQUENCY",
+                    label = "最高频率",
                     value = cluster.maxFreq,
                     onClick = onMaxFreqClick
                 )
                 SettingRow(
-                    label = "MIN FREQUENCY",
+                    label = "最低频率",
                     value = cluster.minFreq,
                     onClick = onMinFreqClick
                 )
                 InfoRow(
-                    label = "Current Clock Speed",
+                    label = "当前主频",
                     value = cluster.currentFreq
                 )
             }
