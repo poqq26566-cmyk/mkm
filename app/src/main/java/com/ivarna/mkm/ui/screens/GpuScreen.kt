@@ -44,7 +44,7 @@ fun GpuScreen(viewModel: GpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
             MediumTopAppBar(
                 navigationIcon = {
                      IconButton(onClick = onOpenDrawer) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                        Icon(Icons.Filled.Menu, contentDescription = "菜单")
                     }
                 },
                 title = {
@@ -84,7 +84,7 @@ fun GpuScreen(viewModel: GpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
             Spacer(modifier = Modifier.height(8.dp))
 
             HeroUsageCard(
-                title = "GPU UTILIZATION",
+                title = "GPU 利用率",
                 usage = gpuStatus.loadPercent,
                 mainValue = "${(gpuStatus.loadPercent * 100).toInt()}%",
                 subValue = gpuStatus.currentFreq
@@ -97,7 +97,7 @@ fun GpuScreen(viewModel: GpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
             )
 
             Spacer(modifier = Modifier.height(24.dp))
-            SectionHeader("Graphics Information")
+            SectionHeader("图形信息")
             ElevatedCard(
                 onClick = {},
                 modifier = Modifier.fillMaxWidth(),
@@ -107,16 +107,16 @@ fun GpuScreen(viewModel: GpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
                 )
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    InfoRow(label = "Renderer", value = gpuStatus.renderer)
-                    InfoRow(label = "System Path", value = gpuStatus.sysfsPath)
-                    InfoRow(label = "Target Frequency", value = gpuStatus.targetFreq)
-                    InfoRow(label = "Governor", value = gpuStatus.governor)
+                    InfoRow(label = "渲染器", value = gpuStatus.renderer)
+                    InfoRow(label = "系统路径", value = gpuStatus.sysfsPath)
+                    InfoRow(label = "目标频率", value = gpuStatus.targetFreq)
+                    InfoRow(label = "调速器", value = gpuStatus.governor)
                 }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            SectionHeader("Performance Controls")
+            SectionHeader("性能控制")
             
             // Warning Card
             OutlinedCard(
@@ -133,12 +133,12 @@ fun GpuScreen(viewModel: GpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
                 ) {
                     Icon(
                         imageVector = Icons.Default.Warning,
-                        contentDescription = "Warning",
+                        contentDescription = "警告",
                         tint = MaterialTheme.colorScheme.error
                     )
                     Spacer(modifier = Modifier.width(16.dp))
                     Text(
-                        text = "Changing frequencies and governors may cause system instability or reboots. Proceed with caution.",
+                        text = "修改频率和调速器可能导致系统不稳定或重启，请谨慎操作。",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.error
                     )
@@ -154,25 +154,25 @@ fun GpuScreen(viewModel: GpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
             ) {
                 Column {
                     SettingRow(
-                        label = "GPU Governor",
+                        label = "GPU 调速器",
                         value = gpuStatus.governor,
                         onClick = { showGovernorSheet = true }
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.outlineVariant)
                     SettingRow(
-                        label = "Maximum Frequency",
+                        label = "最高频率",
                         value = gpuStatus.maxFreq,
                         onClick = { showMaxFreqSheet = true }
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.outlineVariant)
                     SettingRow(
-                        label = "Minimum Frequency",
+                        label = "最低频率",
                         value = gpuStatus.minFreq,
                         onClick = { showMinFreqSheet = true }
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.outlineVariant)
                     SettingRow(
-                        label = "Target Frequency",
+                        label = "目标频率",
                         value = gpuStatus.targetFreq,
                         onClick = { showTargetFreqSheet = true }
                     )
@@ -190,7 +190,7 @@ fun GpuScreen(viewModel: GpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
         // Selection Sheets
         if (showGovernorSheet) {
             SelectionBottomSheet(
-                title = "Select GPU Governor",
+                title = "选择 GPU 调速器",
                 items = gpuStatus.availableGovernors,
                 selectedItem = gpuStatus.governor,
                 onDismiss = { showGovernorSheet = false },
@@ -203,7 +203,7 @@ fun GpuScreen(viewModel: GpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
 
         if (showMaxFreqSheet) {
             SelectionBottomSheet(
-                title = "Maximum Frequency",
+                title = "最高频率",
                 items = gpuStatus.availableFrequencies,
                 selectedItem = gpuStatus.rawMaxFreq,
                 onDismiss = { showMaxFreqSheet = false },
@@ -217,7 +217,7 @@ fun GpuScreen(viewModel: GpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
 
         if (showMinFreqSheet) {
             SelectionBottomSheet(
-                title = "Minimum Frequency",
+                title = "最低频率",
                 items = gpuStatus.availableFrequencies,
                 selectedItem = gpuStatus.rawMinFreq,
                 onDismiss = { showMinFreqSheet = false },
@@ -231,7 +231,7 @@ fun GpuScreen(viewModel: GpuViewModel = viewModel(), onOpenDrawer: () -> Unit = 
 
         if (showTargetFreqSheet) {
             SelectionBottomSheet(
-                title = "Target Frequency",
+                title = "目标频率",
                 items = gpuStatus.availableFrequencies,
                 selectedItem = gpuStatus.rawTargetFreq,
                 onDismiss = { showTargetFreqSheet = false },
