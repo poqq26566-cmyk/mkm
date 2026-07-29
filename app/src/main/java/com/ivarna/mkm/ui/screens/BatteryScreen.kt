@@ -71,14 +71,14 @@ fun BatteryScreen(
             MediumTopAppBar(
                 title = {
                     Text(
-                        "Battery",
+                        "电池",
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Black
                     )
                 },
                 navigationIcon = {
                     IconButton(onClick = onOpenDrawer) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                        Icon(Icons.Filled.Menu, contentDescription = "菜单")
                     }
                 },
                 scrollBehavior = scrollBehavior
@@ -99,16 +99,16 @@ fun BatteryScreen(
                 BatteryHeroCard(stats = data)
 
                 Spacer(modifier = Modifier.height(24.dp))
-                SectionHeader("BATTERY LIFE")
+                SectionHeader("电池续航")
                 EstimatedTimeCard(stats = data)
 
                 Spacer(modifier = Modifier.height(24.dp))
-                SectionHeader("CAPACITY")
+                SectionHeader("电池容量")
                 CapacityCard(stats = data)
 
                 if (data.wattageHistory.isNotEmpty() || data.isSessionActive || sessionHistory.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(24.dp))
-                    SectionHeader("ACTIVITY")
+                    SectionHeader("活动记录")
                     UnifiedActivityCard(
                         stats = data,
                         records = sessionHistory,
@@ -117,7 +117,7 @@ fun BatteryScreen(
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))
-                SectionHeader("SESSION BREAKDOWN")
+                SectionHeader("会话明细")
                 TimeBreakdownCard(stats = data)
 
                 Spacer(modifier = Modifier.height(32.dp))
@@ -136,9 +136,9 @@ fun BatteryScreen(
 @Composable
 fun BatteryHeroCard(stats: BatteryStats) {
     val statusText = when {
-        stats.isCharging -> "Charging"
-        stats.isSessionActive -> "Discharging ${stats.currentMa} mA"
-        else -> "On AC"
+        stats.isCharging -> "充电中"
+        stats.isSessionActive -> "放电中 ${stats.currentMa} mA"
+        else -> "已连接电源"
     }
 
     val statusColor = when {
@@ -235,11 +235,11 @@ fun EstimatedTimeCard(stats: BatteryStats) {
             if (hours > 0) append("${hours}h ")
             append("${minutes}m")
         }
-        subLabel = if (stats.isCharging) "until full" else "remaining"
+        subLabel = if (stats.isCharging) "至充满" else "剩余"
         color = if (stats.isCharging) Color(0xFF4CAF50) else MaterialTheme.colorScheme.primary
     } else {
         label = "—"
-        subLabel = if (stats.isCharging) "Calculating…" else "Need more data"
+        subLabel = if (stats.isCharging) "计算中…" else "数据不足"
         color = MaterialTheme.colorScheme.onSurfaceVariant
     }
 
@@ -273,7 +273,7 @@ fun EstimatedTimeCard(stats: BatteryStats) {
                 val blendedDrain = stats.activeDrainPerHr * (stats.screenOnPercent / 100f) +
                         stats.idleDrainPerHr * (stats.screenOffPercent / 100f)
                 Text(
-                    text = "Based on ${String.format("%.2f", blendedDrain)}%/hr blended drain",
+                    text = "基于 ${String.format("%.2f", blendedDrain)}%/小时 综合耗电速率",
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                 )
@@ -296,7 +296,7 @@ fun CapacityCard(stats: BatteryStats) {
 
             if (showRated) {
                 CapacityRow(
-                    label = "Rated (design) capacity",
+                    label = "额定（设计）容量",
                     value = "${stats.ratedCapacityMah} mAh",
                     icon = Icons.Default.BatteryStd,
                     color = MaterialTheme.colorScheme.primary
@@ -307,7 +307,7 @@ fun CapacityCard(stats: BatteryStats) {
             if (stats.estimatedCapacityMah > 0) {
                 val isEstimatedOnly = !showRated
                 CapacityRow(
-                    label = if (isEstimatedOnly) "Estimated capacity" else "Estimated full capacity",
+                    label = if (isEstimatedOnly) "估计容量" else "估计满电容量",
                     value = "${stats.estimatedCapacityMah} mAh",
                     icon = Icons.Default.BatteryFull,
                     color = MaterialTheme.colorScheme.secondary
@@ -327,21 +327,21 @@ fun CapacityCard(stats: BatteryStats) {
                     )
                     Spacer(modifier = Modifier.height(4.dp))
                     Text(
-                        text = "Battery health: ${String.format("%.1f", healthPct)}%",
+                        text = "电池健康度：${String.format("%.1f", healthPct)}%",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 } else if (isEstimatedOnly) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = "Calculated from charge counter. Root or Shizuku provides more accurate kernel readings.",
+                        text = "根据电量计数器计算得出。使用 Root 或 Shizuku 可获得更精确的内核读数。",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             } else {
                 Text(
-                    text = "Capacity info unavailable. Root or Shizuku access may be required to read kernel battery data.",
+                    text = "容量信息不可用。可能需要 Root 或 Shizuku 权限才能读取内核电池数据。",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -388,14 +388,14 @@ fun CapacityRow(
 fun DrainRateGrid(stats: BatteryStats) {
     Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
         DrainRateCard(
-            title = "Active Drain",
+            title = "使用中耗电",
             value = "${String.format("%.2f", stats.activeDrainPerHr)}%/hr",
             icon = Icons.Default.PhoneAndroid,
             isActive = stats.screenOnTimeMs > 0,
             modifier = Modifier.weight(1f)
         )
         DrainRateCard(
-            title = "Idle Drain",
+            title = "待机耗电",
             value = "${String.format("%.2f", stats.idleDrainPerHr)}%/hr",
             icon = Icons.Default.Snooze,
             isActive = stats.screenOffTimeMs > 0,
@@ -476,7 +476,7 @@ fun TimeBreakdownCard(stats: BatteryStats) {
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
-                            text = "Charging Session",
+                            text = "充电会话",
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.SemiBold,
                             color = Color(0xFF4CAF50)
@@ -504,7 +504,7 @@ fun TimeBreakdownCard(stats: BatteryStats) {
                 HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
             } else if (!stats.isSessionActive) {
                 Text(
-                    text = "No active discharging session. Disconnect charger to start monitoring.",
+                    text = "当前没有进行中的放电会话。拔掉充电器即可开始监控。",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -512,7 +512,7 @@ fun TimeBreakdownCard(stats: BatteryStats) {
             }
 
             TimeRow(
-                label = "Screen on",
+                label = "亮屏",
                 duration = formatDuration(stats.screenOnTimeMs),
                 percent = stats.screenOnPercent,
                 drainPercent = stats.screenOnDrainPercent,
@@ -522,7 +522,7 @@ fun TimeBreakdownCard(stats: BatteryStats) {
             HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
 
             TimeRow(
-                label = "Screen off",
+                label = "熄屏",
                 duration = formatDuration(stats.screenOffTimeMs),
                 percent = stats.screenOffPercent,
                 drainPercent = stats.screenOffDrainPercent,
@@ -532,7 +532,7 @@ fun TimeBreakdownCard(stats: BatteryStats) {
             HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
 
             TimeRow(
-                label = "Deep sleep",
+                label = "深度睡眠",
                 duration = formatDuration(stats.deepSleepTimeMs),
                 percent = stats.deepSleepPercent,
                 drainPercent = stats.deepSleepDrainPercent,
@@ -542,7 +542,7 @@ fun TimeBreakdownCard(stats: BatteryStats) {
             HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
 
             TimeRow(
-                label = "Awake",
+                label = "唤醒",
                 duration = formatDuration(stats.awakeTimeMs),
                 percent = stats.awakePercent,
                 drainPercent = stats.awakeDrainPercent,
@@ -552,9 +552,9 @@ fun TimeBreakdownCard(stats: BatteryStats) {
 
             if (stats.isSessionActive || stats.isCharging) {
                 Spacer(modifier = Modifier.height(16.dp))
-                val sessionLabel = if (stats.isCharging) "Charging for" else "Session started"
+                val sessionLabel = if (stats.isCharging) "已充电" else "会话开始于"
                 Text(
-                    text = "$sessionLabel ${formatDuration(stats.totalSessionTimeMs)} ago",
+                    text = "$sessionLabel ${formatDuration(stats.totalSessionTimeMs)}前",
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -600,7 +600,7 @@ fun TimeRow(
             )
             if (drainPercent > 0f) {
                 Text(
-                    text = "−${String.format("%.1f", drainPercent)}% · ${String.format("%.0f", percent)}% of time",
+                    text = "−${String.format("%.1f", drainPercent)}% · 占时间的 ${String.format("%.0f", percent)}%",
                     style = MaterialTheme.typography.labelSmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -643,12 +643,12 @@ fun NotificationToggleCard(
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
                     Text(
-                        text = "Notification Card",
+                        text = "通知卡片",
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
                     Text(
-                        text = if (enabled) "Showing live battery stats in notification" else "Tap to enable battery notification",
+                        text = if (enabled) "正在通知中显示实时电池数据" else "点击启用电池通知",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -700,7 +700,7 @@ fun HistorySparklineCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Live",
+                    text = "实时",
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -790,7 +790,7 @@ fun IntervalSelectorCard(
     onSelect: (Long) -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
-    val currentLabel = options.find { it.second == currentMs }?.first ?: "30s"
+    val currentLabel = options.find { it.second == currentMs }?.first ?: "30秒"
 
     ElevatedCard(
         modifier = Modifier.fillMaxWidth(),
@@ -815,12 +815,12 @@ fun IntervalSelectorCard(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         Text(
-                            text = "Refresh Interval",
+                            text = "刷新间隔",
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.SemiBold
                         )
                         Text(
-                            text = "How often battery stats update",
+                            text = "电池数据的更新频率",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -867,7 +867,7 @@ fun IntervalSelectorCard(
             }
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Longer intervals reduce MKM's own battery usage (was every 1s, now default 30s).",
+                text = "更长的间隔可降低 MKM 自身的耗电（原为每1秒，现默认30秒）。",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
             )
@@ -892,7 +892,7 @@ fun NotificationContentCard(
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
             Text(
-                text = "Notification Heading",
+                text = "通知标题",
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
@@ -917,7 +917,7 @@ fun NotificationContentCard(
             HorizontalDivider(modifier = Modifier.padding(vertical = 12.dp))
 
             Text(
-                text = "Expanded Content",
+                text = "展开内容",
                 style = MaterialTheme.typography.titleSmall,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary
@@ -976,15 +976,15 @@ fun SessionHistorySummaryCard(
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
                     Text(
-                        text = "Past Sessions",
+                        text = "历史会话",
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.SemiBold
                     )
                     Text(
                         text = if (records.isEmpty()) {
-                            "No sessions recorded yet"
+                            "暂无记录的会话"
                         } else {
-                            "${records.size} saved · $charging charging · $discharging discharging"
+                            "已保存 ${records.size} 条 · 充电 $charging 次 · 放电 $discharging 次"
                         },
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -993,7 +993,7 @@ fun SessionHistorySummaryCard(
             }
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                contentDescription = "Open session history",
+                contentDescription = "打开会话历史",
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
@@ -1030,7 +1030,7 @@ fun UnifiedActivityCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Power",
+                        text = "功率",
                         style = MaterialTheme.typography.labelLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -1060,7 +1060,7 @@ fun UnifiedActivityCard(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Drain Rate",
+                        text = "耗电速率",
                         style = MaterialTheme.typography.labelLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -1104,13 +1104,13 @@ fun UnifiedActivityCard(
                     Spacer(modifier = Modifier.width(10.dp))
                     Column {
                         Text(
-                            text = "Session History",
+                            text = "会话历史",
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.SemiBold
                         )
                         Text(
-                            text = if (records.isEmpty()) "No sessions recorded yet"
-                                   else "${records.size} saved · $charging charging · $discharging discharging",
+                            text = if (records.isEmpty()) "暂无记录的会话"
+                                   else "已保存 ${records.size} 条 · 充电 $charging 次 · 放电 $discharging 次",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -1118,7 +1118,7 @@ fun UnifiedActivityCard(
                 }
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
-                    contentDescription = "Open history",
+                    contentDescription = "打开历史",
                     tint = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
@@ -1160,12 +1160,12 @@ fun NotificationNavCard(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         Text(
-                            text = "Notification Card",
+                            text = "通知卡片",
                             style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.SemiBold
                         )
                         Text(
-                            text = if (enabled) "Showing live battery stats in notification" else "Tap to enable battery notification",
+                            text = if (enabled) "正在通知中显示实时电池数据" else "点击启用电池通知",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -1193,7 +1193,7 @@ fun NotificationNavCard(
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = "Customise notification content",
+                            text = "自定义通知内容",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
