@@ -230,7 +230,7 @@ class OverlayService : Service() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
                 CHANNEL_ID,
-                "Overlay Service",
+                "悬浮窗服务",
                 NotificationManager.IMPORTANCE_LOW
             )
             val manager = getSystemService(NotificationManager::class.java)
@@ -246,8 +246,8 @@ class OverlayService : Service() {
         }
 
         return builder
-            .setContentTitle("MKM Overlay Active")
-            .setContentText("Status monitor is running")
+            .setContentTitle("MKM 悬浮窗运行中")
+            .setContentText("状态监控正在运行")
             .setSmallIcon(R.drawable.ic_stat_battery)
             .build()
     }
