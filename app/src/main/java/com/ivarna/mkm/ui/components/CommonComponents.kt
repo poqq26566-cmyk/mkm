@@ -158,7 +158,7 @@ fun CoreMiniCard(
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "CORE ${core.id}",
+                text = "核心 ${core.id}",
                 style = MaterialTheme.typography.labelSmall,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -313,8 +313,8 @@ fun HeroUsageCard(
 
 @Composable
 fun BootToggleCard(
-    title: String = "Apply on Boot",
-    subtitle: String = "Apply these settings automatically after device reboot",
+    title: String = "开机自动应用",
+    subtitle: String = "设备重启后自动应用这些设置",
     enabled: Boolean,
     onToggle: (Boolean) -> Unit,
     modifier: Modifier = Modifier
