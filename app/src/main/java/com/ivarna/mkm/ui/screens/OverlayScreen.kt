@@ -91,18 +91,18 @@ fun OverlayScreen(
             MediumTopAppBar(
                 navigationIcon = {
                     IconButton(onClick = onOpenDrawer) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                        Icon(Icons.Filled.Menu, contentDescription = "菜单")
                     }
                 },
                 title = {
                     Column {
                         Text(
-                            "Status Overlay",
+                            "状态悬浮窗",
                             style = MaterialTheme.typography.headlineMedium,
                             fontWeight = FontWeight.Black
                         )
                         Text(
-                            "Performance Monitor",
+                            "性能监控",
                             style = MaterialTheme.typography.labelMedium,
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold
@@ -137,7 +137,7 @@ fun OverlayScreen(
                     }
                 },
                 icon = { Icon(if (isOverlayEnabled) Icons.Default.Stop else Icons.Default.PlayArrow, null) },
-                text = { Text(if (isOverlayEnabled) "Stop Overlay" else "Start Overlay") },
+                text = { Text(if (isOverlayEnabled) "停止悬浮窗" else "启动悬浮窗") },
                 containerColor = if (isOverlayEnabled) MaterialTheme.colorScheme.errorContainer else MaterialTheme.colorScheme.primaryContainer,
                 shape = CircleShape // Pill shape for expressive FAB
             )
@@ -208,20 +208,20 @@ fun OverlayScreen(
         ) {
             item {
                 HeroUsageCard(
-                    title = "OVERLAY STATUS",
+                    title = "悬浮窗状态",
                     usage = if (isOverlayEnabled) 1f else 0f,
-                    mainValue = if (isOverlayEnabled) "ACTIVE" else "INACTIVE",
-                    subValue = if (isOverlayEnabled) "Real-time monitoring enabled" else "Overlay service is stopped",
+                    mainValue = if (isOverlayEnabled) "已启用" else "未启用",
+                    subValue = if (isOverlayEnabled) "实时监控已启用" else "悬浮窗服务已停止",
                     onClick = { /* No action needed */ },
                     modifier = Modifier.padding(bottom = 8.dp)
                 )
             }
 
             item {
-                SettingsSection(title = "Visible Metrics") {
+                SettingsSection(title = "显示指标") {
                     OverlayToggleItem(
                         icon = Icons.Default.DeveloperBoard,
-                        title = "CPU Utilization",
+                        title = "CPU 利用率",
                         checked = showCpuUsage,
                         onCheckedChange = {
                             showCpuUsage = it
@@ -231,7 +231,7 @@ fun OverlayScreen(
                     )
                     OverlayToggleItem(
                         icon = Icons.Default.Timeline,
-                        title = "CPU Frequency",
+                        title = "CPU 频率",
                         checked = showCpuFreq,
                         onCheckedChange = {
                             showCpuFreq = it
@@ -241,7 +241,7 @@ fun OverlayScreen(
                     )
                     OverlayToggleItem(
                         icon = Icons.Default.VideogameAsset,
-                        title = "GPU Utilization",
+                        title = "GPU 利用率",
                         checked = showGpuUsage,
                         onCheckedChange = {
                             showGpuUsage = it
@@ -251,7 +251,7 @@ fun OverlayScreen(
                     )
                     OverlayToggleItem(
                         icon = Icons.Default.Dns,
-                        title = "RAM Usage",
+                        title = "内存占用",
                         checked = showRamUsage,
                         onCheckedChange = {
                             showRamUsage = it
@@ -261,7 +261,7 @@ fun OverlayScreen(
                     )
                     OverlayToggleItem(
                         icon = Icons.Default.SwapCalls,
-                        title = "Swap Usage",
+                        title = "交换分区占用",
                         checked = showSwapUsage,
                         onCheckedChange = { 
                             showSwapUsage = it
@@ -271,7 +271,7 @@ fun OverlayScreen(
                     )
                     OverlayToggleItem(
                         icon = Icons.Default.FlashOn,
-                        title = "Power Usage",
+                        title = "功率占用",
                         checked = showPower,
                         onCheckedChange = { 
                             showPower = it
@@ -281,7 +281,7 @@ fun OverlayScreen(
                     )
                     OverlayToggleItem(
                         icon = Icons.Default.Thermostat,
-                        title = "CPU Temperature",
+                        title = "CPU 温度",
                         checked = showCpuTemp,
                         onCheckedChange = { 
                             showCpuTemp = it
@@ -291,7 +291,7 @@ fun OverlayScreen(
                     )
                     OverlayToggleItem(
                         icon = Icons.Default.BatteryChargingFull,
-                        title = "Battery Temperature",
+                        title = "电池温度",
                         checked = showBatteryTemp,
                         onCheckedChange = { 
                             showBatteryTemp = it
@@ -301,7 +301,7 @@ fun OverlayScreen(
                     )
                     OverlayToggleItem(
                         icon = Icons.Default.BatteryStd,
-                        title = "Battery Percentage",
+                        title = "电池百分比",
                         checked = showBatteryPercent,
                         onCheckedChange = { 
                             showBatteryPercent = it
@@ -327,11 +327,11 @@ fun OverlayScreen(
                     )
                 }
                 
-                SettingsSection(title = "Component Order") {
+                SettingsSection(title = "组件顺序") {
                     SettingsItem(
                         icon = Icons.Default.Reorder,
-                        title = "Reorder Components",
-                        subtitle = "Customize overlay layout",
+                        title = "调整组件顺序",
+                        subtitle = "自定义悬浮窗布局",
                         onClick = { showReorderDialog = true },
                         trailing = {
                             Icon(
@@ -345,10 +345,10 @@ fun OverlayScreen(
             }
 
             item {
-                SettingsSection(title = "Appearance") {
+                SettingsSection(title = "外观") {
                     OverlayToggleItem(
                         icon = Icons.Default.LinearScale,
-                        title = "Show Progress Bars",
+                        title = "显示进度条",
                         checked = showProgressBars,
                         onCheckedChange = { 
                             showProgressBars = it
@@ -358,7 +358,7 @@ fun OverlayScreen(
                     )
                     OverlayToggleItem(
                         icon = Icons.Default.EmojiSymbols,
-                        title = "Use Icons Only",
+                        title = "仅显示图标",
                         checked = showIconsOnly,
                         onCheckedChange = { 
                             showIconsOnly = it
@@ -368,7 +368,7 @@ fun OverlayScreen(
                     )
                     OverlayToggleItem(
                         icon = Icons.Default.GridView,
-                        title = "Grid Layout",
+                        title = "网格布局",
                         checked = isGridView,
                         onCheckedChange = { 
                             isGridView = it
@@ -381,7 +381,7 @@ fun OverlayScreen(
                     
                     OverlayToggleItem(
                         icon = Icons.Default.ViewArray,
-                        title = "Horizontal Layout",
+                        title = "横向布局",
                         checked = isHorizontal,
                         onCheckedChange = { 
                             isHorizontal = it
@@ -394,7 +394,7 @@ fun OverlayScreen(
                     
                     OverlayToggleItem(
                         icon = Icons.Default.ShowChart,
-                        title = "Show Sparklines",
+                        title = "显示迷你图",
                         checked = showSparklines,
                         onCheckedChange = { 
                             showSparklines = it
@@ -406,8 +406,8 @@ fun OverlayScreen(
                     if (isGridView) {
                         SettingsItem(
                             icon = Icons.Default.ViewColumn,
-                            title = "Grid Columns",
-                            subtitle = "Columns: $gridColumns",
+                            title = "网格列数",
+                            subtitle = "列数：$gridColumns",
                             onClick = { }
                         ) {
                             Slider(
@@ -430,7 +430,7 @@ fun OverlayScreen(
 
                     OverlayToggleItem(
                         icon = Icons.Default.Numbers,
-                        title = "Show Absolute Values",
+                        title = "显示绝对数值",
                         checked = showAbsoluteValues,
                         onCheckedChange = {
                             showAbsoluteValues = it
@@ -443,7 +443,7 @@ fun OverlayScreen(
                         Column(modifier = Modifier.padding(start = 16.dp)) {
                             OverlayToggleItem(
                                 icon = Icons.Default.DeveloperBoard,
-                                title = "  CPU as Frequency",
+                                title = "  CPU 显示为频率",
                                 checked = absCpu,
                                 onCheckedChange = {
                                     absCpu = it
@@ -453,7 +453,7 @@ fun OverlayScreen(
                             )
                             OverlayToggleItem(
                                 icon = Icons.Default.VideogameAsset,
-                                title = "  GPU as Frequency",
+                                title = "  GPU 显示为频率",
                                 checked = absGpu,
                                 onCheckedChange = {
                                     absGpu = it
@@ -463,7 +463,7 @@ fun OverlayScreen(
                             )
                             OverlayToggleItem(
                                 icon = Icons.Default.Dns,
-                                title = "  RAM as Size",
+                                title = "  内存显示为容量",
                                 checked = absRam,
                                 onCheckedChange = {
                                     absRam = it
@@ -473,7 +473,7 @@ fun OverlayScreen(
                             )
                             OverlayToggleItem(
                                 icon = Icons.Default.SwapCalls,
-                                title = "  SWAP as Size",
+                                title = "  交换分区显示为容量",
                                 checked = absSwap,
                                 onCheckedChange = {
                                     absSwap = it
@@ -486,16 +486,16 @@ fun OverlayScreen(
 
                     Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                         Text(
-                            text = "CPU Frequency Display",
+                            text = "CPU 频率显示方式",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Box {
                             val currentLabel = when (cpuFreqDisplay) {
-                                "avg" -> "Average"
-                                "max" -> "Max Frequency"
-                                else -> "All Cores"
+                                "avg" -> "平均值"
+                                "max" -> "最高频率"
+                                else -> "所有核心"
                             }
                             ExposedDropdownMenuBox(
                                 expanded = cpuFreqDropdownExpanded,
@@ -505,7 +505,7 @@ fun OverlayScreen(
                                     value = currentLabel,
                                     onValueChange = {},
                                     readOnly = true,
-                                    label = { Text("Mode") },
+                                    label = { Text("模式") },
                                     trailingIcon = {
                                         ExposedDropdownMenuDefaults.TrailingIcon(expanded = cpuFreqDropdownExpanded)
                                     },
@@ -519,9 +519,9 @@ fun OverlayScreen(
                                     onDismissRequest = { cpuFreqDropdownExpanded = false }
                                 ) {
                                     listOf(
-                                        "all_cores" to "All Cores",
-                                        "avg" to "Average",
-                                        "max" to "Max Frequency"
+                                        "all_cores" to "所有核心",
+                                        "avg" to "平均值",
+                                        "max" to "最高频率"
                                     ).forEach { (value, label) ->
                                         DropdownMenuItem(
                                             text = { Text(label) },
@@ -548,7 +548,7 @@ fun OverlayScreen(
                         }
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Controls how CPU frequency is summarised in the overlay.",
+                            text = "控制悬浮窗中 CPU 频率的汇总显示方式。",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                         )
@@ -557,10 +557,10 @@ fun OverlayScreen(
             }
 
             item {
-                SettingsSection(title = "Styling") {
+                SettingsSection(title = "样式") {
                     SettingsItem(
                         icon = Icons.Default.Opacity,
-                        title = "Background Opacity",
+                        title = "背景不透明度",
                         subtitle = "${(overlayOpacity * 100).toInt()}%",
                         onClick = { }
                     ) {
@@ -600,12 +600,12 @@ fun OverlayScreen(
                             Spacer(modifier = Modifier.width(16.dp))
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
-                                    "Accent Color",
+                                    "强调色",
                                     style = MaterialTheme.typography.bodyLarge,
                                     fontWeight = FontWeight.Medium
                                 )
                                 Text(
-                                    "Select overlay theme",
+                                    "选择悬浮窗主题",
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -643,7 +643,7 @@ fun OverlayScreen(
 
                         OverlayToggleItem(
                             icon = Icons.Default.FormatColorFill,
-                            title = "Apply Accent to Background",
+                            title = "将强调色应用到背景",
                             checked = accentTintBackground,
                             onCheckedChange = {
                                 accentTintBackground = it
@@ -655,7 +655,7 @@ fun OverlayScreen(
                         if (accentTintBackground) {
                             Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 8.dp)) {
                                 Text(
-                                    text = "Background Color",
+                                    text = "背景颜色",
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -688,7 +688,7 @@ fun OverlayScreen(
                                     }
                                 }
                                 Text(
-                                    text = "Pick a different color for the background, or leave matching the accent.",
+                                    text = "为背景选择不同颜色，或保持与强调色一致。",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                                 )
@@ -699,11 +699,11 @@ fun OverlayScreen(
             }
 
             item {
-                SettingsSection(title = "Overlay Behavior") {
+                SettingsSection(title = "悬浮窗行为") {
                     SettingsItem(
                         icon = Icons.Default.Speed,
-                        title = "Update Frequency",
-                        subtitle = "Interval: ${updateInterval}ms",
+                        title = "更新频率",
+                        subtitle = "间隔：${updateInterval}毫秒",
                         onClick = { }
                     ) {
                         Slider(
@@ -722,7 +722,7 @@ fun OverlayScreen(
 
                     OverlayToggleItem(
                         icon = Icons.Default.OpenWith,
-                        title = "Movable Overlay",
+                        title = "可移动悬浮窗",
                         checked = isMovable,
                         onCheckedChange = { 
                             isMovable = it
@@ -738,7 +738,7 @@ fun OverlayScreen(
                             color = MaterialTheme.colorScheme.outlineVariant
                         )
                         Text(
-                            "Attach Position",
+                            "吸附位置",
                             style = MaterialTheme.typography.labelLarge,
                             color = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
@@ -797,7 +797,7 @@ fun OverlayScreen(
                             }
                             
                             Text(
-                                "SCREEN",
+                                "屏幕",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.outline,
                                 fontWeight = FontWeight.Bold
@@ -825,7 +825,7 @@ fun OverlayScreen(
                         )
                         Spacer(modifier = Modifier.width(16.dp))
                         Text(
-                            "The overlay will appear as a small floating window on top of other apps.",
+                            "悬浮窗会以小窗口形式显示在其他应用上方。",
                             style = MaterialTheme.typography.bodyMedium
                         )
                     }
@@ -869,15 +869,15 @@ fun ComponentOrderDialog(
     val lazyListState = rememberLazyListState()
     
     val metricLabels = mapOf(
-        "cpu_usage" to ("CPU Utilization" to Icons.Default.DeveloperBoard),
-        "cpu_freq" to ("CPU Frequency" to Icons.Default.Timeline),
-        "gpu_usage" to ("GPU Utilization" to Icons.Default.VideogameAsset),
-        "ram_usage" to ("RAM Usage" to Icons.Default.Dns),
-        "swap_usage" to ("Swap Usage" to Icons.Default.SwapCalls),
-        "power_usage" to ("Power Usage" to Icons.Default.FlashOn),
-        "cpu_temp" to ("CPU Temperature" to Icons.Default.Thermostat),
-        "battery_temp" to ("Battery Temperature" to Icons.Default.BatteryChargingFull),
-        "battery_percent" to ("Battery Percentage" to Icons.Default.BatteryStd)
+        "cpu_usage" to ("CPU 利用率" to Icons.Default.DeveloperBoard),
+        "cpu_freq" to ("CPU 频率" to Icons.Default.Timeline),
+        "gpu_usage" to ("GPU 利用率" to Icons.Default.VideogameAsset),
+        "ram_usage" to ("内存占用" to Icons.Default.Dns),
+        "swap_usage" to ("交换分区占用" to Icons.Default.SwapCalls),
+        "power_usage" to ("功率占用" to Icons.Default.FlashOn),
+        "cpu_temp" to ("CPU 温度" to Icons.Default.Thermostat),
+        "battery_temp" to ("电池温度" to Icons.Default.BatteryChargingFull),
+        "battery_percent" to ("电池百分比" to Icons.Default.BatteryStd)
     )
     
     Dialog(onDismissRequest = onDismiss) {
@@ -898,12 +898,12 @@ fun ComponentOrderDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        "Reorder Components",
+                        "调整组件顺序",
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold
                     )
                     IconButton(onClick = onDismiss) {
-                        Icon(Icons.Default.Close, "Close")
+                        Icon(Icons.Default.Close, "关闭")
                     }
                 }
                 
@@ -911,7 +911,7 @@ fun ComponentOrderDialog(
                 
                 // Drag instructions
                 Text(
-                    "Long press and drag to reorder",
+                    "长按并拖动以调整顺序",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(horizontal = 24.dp, vertical = 12.dp)
@@ -925,7 +925,7 @@ fun ComponentOrderDialog(
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     itemsIndexed(localOrder, key = { _, key -> key }) { index, key ->
-                        val labelInfo = metricLabels[key] ?: ("Unknown" to Icons.Default.Help)
+                        val labelInfo = metricLabels[key] ?: ("未知" to Icons.Default.Help)
                         val isDragging = draggedItemKey == key
                         
                         Surface(
@@ -1036,7 +1036,7 @@ fun ComponentOrderDialog(
                     horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.End)
                 ) {
                     TextButton(onClick = onDismiss) {
-                        Text("Cancel")
+                        Text("取消")
                     }
                     Button(
                         onClick = {
@@ -1044,7 +1044,7 @@ fun ComponentOrderDialog(
                             onDismiss()
                         }
                     ) {
-                        Text("Save")
+                        Text("保存")
                     }
                 }
             }
