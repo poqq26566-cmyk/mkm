@@ -39,12 +39,12 @@ fun StorageScreen(viewModel: StorageViewModel = viewModel(), onOpenDrawer: () ->
             MediumTopAppBar(
                 navigationIcon = {
                      IconButton(onClick = onOpenDrawer) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                        Icon(Icons.Filled.Menu, contentDescription = "菜单")
                     }
                 },
                 title = {
                     Text(
-                        "STORAGE Management",
+                        "存储管理",
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Black
                     )
@@ -77,18 +77,18 @@ fun StorageScreen(viewModel: StorageViewModel = viewModel(), onOpenDrawer: () ->
 
                     if (internalStorage != null) {
                         HeroUsageCard(
-                            title = "INTERNAL STORAGE",
+                            title = "内部存储",
                             usage = internalStorage.usagePercent / 100f,
                             mainValue = "${internalStorage.usagePercent.toInt()}%",
-                            subValue = "${internalStorage.used} used of ${internalStorage.total}"
+                            subValue = "已用 ${internalStorage.used} / 共 ${internalStorage.total}"
                         )
                     }
 
                     if (systemStorage != null) {
                          StatCard(
-                            title = "System Partition",
+                            title = "系统分区",
                             value = systemStorage.used,
-                            subValue = "of ${systemStorage.total} used",
+                            subValue = "已用 / 共 ${systemStorage.total}",
                             progress = systemStorage.usagePercent / 100f,
                             icon = Icons.Default.SdStorage,
                             modifier = Modifier.fillMaxWidth()
@@ -111,19 +111,19 @@ fun StorageScreen(viewModel: StorageViewModel = viewModel(), onOpenDrawer: () ->
                     ) {
                         Column(modifier = Modifier.padding(24.dp)) {
                             Text(
-                                text = "Storage Info",
+                                text = "存储信息",
                                 style = MaterialTheme.typography.headlineSmall,
                                 fontWeight = FontWeight.Bold
                             )
                             Spacer(modifier = Modifier.height(16.dp))
                             
-                            InfoRow(label = "Type", value = state.type)
-                            InfoRow(label = "Partition Count", value = state.partitions.size.toString())
+                            InfoRow(label = "类型", value = state.type)
+                            InfoRow(label = "分区数量", value = state.partitions.size.toString())
                             
                             internalStorage?.let {
-                                InfoRow(label = "Internal Total", value = it.total)
-                                InfoRow(label = "Internal Free", value = it.free)
-                                InfoRow(label = "Block Size", value = "${it.blockSize} bytes")
+                                InfoRow(label = "内部总容量", value = it.total)
+                                InfoRow(label = "内部剩余", value = it.free)
+                                InfoRow(label = "块大小", value = "${it.blockSize} 字节")
                             }
                         }
                     }
