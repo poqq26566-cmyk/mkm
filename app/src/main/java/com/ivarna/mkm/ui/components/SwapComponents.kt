@@ -20,20 +20,20 @@ fun SwapConfigDialog(
     
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Configure Swap") },
+        title = { Text("配置交换分区") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
                 OutlinedTextField(
                     value = sizeText,
                     onValueChange = { sizeText = it },
-                    label = { Text("Size (MB)") },
+                    label = { Text("大小（MB）") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     modifier = Modifier.fillMaxWidth()
                 )
                 OutlinedTextField(
                     value = pathText,
                     onValueChange = { pathText = it },
-                    label = { Text("Path") },
+                    label = { Text("路径") },
                     modifier = Modifier.fillMaxWidth()
                 )
                 // Note removed as requested
@@ -47,12 +47,12 @@ fun SwapConfigDialog(
                     onDismiss()
                 }
             ) {
-                Text("Apply")
+                Text("应用")
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("Cancel")
+                Text("取消")
             }
         }
     )
