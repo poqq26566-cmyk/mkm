@@ -59,26 +59,26 @@ fun ThermalCard(
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
                         Text(
-                            text = "Thermal Status",
+                            text = "温控状态",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
                         if (isLoading) {
                             Text(
-                                "Checking sensors...",
+                                "正在检测传感器…",
                                 style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         } else {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(
-                                    text = "Peak: ${status.maxTemp}°C",
+                                    text = "峰值：${status.maxTemp}°C",
                                     style = MaterialTheme.typography.bodyMedium,
                                     color = if (status.maxTemp > 80) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                                 if (status.currentLimit > 0) {
                                     Text(
-                                        text = " • Limit: ${status.currentLimit}°C",
+                                        text = " • 限制：${status.currentLimit}°C",
                                         style = MaterialTheme.typography.bodyMedium,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
@@ -98,7 +98,7 @@ fun ThermalCard(
                     IconButton(onClick = { expanded = !expanded }) {
                         Icon(
                             imageVector = if (expanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-                            contentDescription = "Expand"
+                            contentDescription = "展开"
                         )
                     }
                 }
@@ -147,7 +147,7 @@ fun ThermalCard(
                         ) {
                             Icon(Icons.Default.Tune, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Set Limit")
+                            Text("设置限制")
                         }
 
                         Button(
@@ -160,7 +160,7 @@ fun ThermalCard(
                         ) {
                             Icon(Icons.Default.Warning, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(8.dp))
-                            Text("Disable")
+                            Text("禁用")
                         }
                     }
                     
@@ -168,7 +168,7 @@ fun ThermalCard(
                         onClick = { showLogDialog = true },
                         modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
                     ) {
-                        Text("Show Debug Logs")
+                        Text("查看调试日志")
                     }
                 }
             }
@@ -182,10 +182,10 @@ fun ThermalCard(
         AlertDialog(
             onDismissRequest = { showLimitDialog = false },
             icon = { Icon(Icons.Default.Thermostat, contentDescription = null) },
-            title = { Text("Set Thermal Limit") },
+            title = { Text("设置温控限制") },
             text = {
                 Column {
-                    Text("Adjust the temperature at which throttling begins. Higher values increase performance but also heat.")
+                    Text("调整开始降频的温度。数值越高性能越好，但发热也越高。")
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
                         text = "${sliderValue.toInt()}°C",
@@ -201,7 +201,7 @@ fun ThermalCard(
                     )
                     if (sliderValue > 85) {
                         Text(
-                            "Warning: High temperatures can degrade battery life.",
+                            "警告：高温可能会降低电池寿命。",
                             color = MaterialTheme.colorScheme.error,
                             style = MaterialTheme.typography.bodySmall
                         )
@@ -215,12 +215,12 @@ fun ThermalCard(
                         showLimitDialog = false
                     }
                 ) {
-                    Text("Apply")
+                    Text("应用")
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showLimitDialog = false }) {
-                    Text("Cancel")
+                    Text("取消")
                 }
             }
         )
@@ -231,11 +231,11 @@ fun ThermalCard(
         
         AlertDialog(
             onDismissRequest = { showLogDialog = false },
-            title = { Text("Debug Logs") },
+            title = { Text("调试日志") },
             text = {
                 LazyColumn(modifier = Modifier.height(300.dp)) {
                     if (logs.isEmpty()) {
-                        item { Text("No logs yet.") }
+                        item { Text("暂无日志。") }
                     } else {
                         items(logs) { log ->
                             Text(
@@ -251,7 +251,7 @@ fun ThermalCard(
             },
             confirmButton = {
                 TextButton(onClick = { showLogDialog = false }) {
-                    Text("Close")
+                    Text("关闭")
                 }
             }
         )
@@ -261,9 +261,9 @@ fun ThermalCard(
         AlertDialog(
             onDismissRequest = { showWarningDialog = false },
             icon = { Icon(Icons.Default.Warning, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
-            title = { Text("Extreme Danger") },
+            title = { Text("极度危险") },
             text = { 
-                Text("Disabling thermal throttling can permanently damage your device, battery, and cause physical harm. This is NOT recommended.\n\nAre you absolutely sure?") 
+                Text("禁用温控降频可能会永久损坏你的设备和电池，甚至造成人身伤害。强烈不建议这样做。\n\n你确定要继续吗？") 
             },
             confirmButton = {
                 TextButton(
@@ -273,12 +273,12 @@ fun ThermalCard(
                     },
                     colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.error)
                 ) {
-                    Text("Yes, I understand the risks")
+                    Text("是的，我了解风险")
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showWarningDialog = false }) {
-                    Text("Cancel")
+                    Text("取消")
                 }
             }
         )
