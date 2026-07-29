@@ -35,7 +35,7 @@ fun PowerMonitorCard(
         targetValue = if (status.isCharging) Color(0xFF4CAF50) else Color(0xFFF44336),
         label = "polarityColor"
     )
-    val statusLabel = if (status.isCharging) "Charging" else "Discharging"
+    val statusLabel = if (status.isCharging) "充电中" else "放电中"
     val statusIcon = if (status.isCharging) Icons.Default.BatteryChargingFull else Icons.Default.BatteryAlert
 
     Card(
@@ -50,7 +50,7 @@ fun PowerMonitorCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "SYSTEM POWER DRAW",
+                    text = "系统功耗",
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.onPrimaryContainer,
                     fontWeight = FontWeight.Bold
@@ -104,7 +104,7 @@ fun PowerMonitorCard(
                 )
             }
             Text(
-                text = if (status.multiplier != 1.0f) "Calibrated System Consumption (x${status.multiplier})" else "Total System Consumption",
+                text = if (status.multiplier != 1.0f) "校准后系统总功耗 (x${status.multiplier})" else "系统总功耗",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
             )
@@ -117,8 +117,8 @@ fun PowerMonitorCard(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                PowerDetailItem("Voltage", "${status.voltageUv / 1000} mV", isHero = true)
-                PowerDetailItem("Current", "${polaritySign}${status.currentUa / 1000} mA", isHero = true)
+                PowerDetailItem("电压", "${status.voltageUv / 1000} mV", isHero = true)
+                PowerDetailItem("电流", "${polaritySign}${status.currentUa / 1000} mA", isHero = true)
             }
         }
     }
@@ -151,7 +151,7 @@ fun EfficiencyGraph(
 ) {
     if (dataPoints.isEmpty()) {
         Box(modifier = modifier.height(200.dp), contentAlignment = Alignment.Center) {
-            Text("No Data", style = MaterialTheme.typography.bodyMedium)
+            Text("暂无数据", style = MaterialTheme.typography.bodyMedium)
         }
         return
     }
@@ -300,7 +300,7 @@ fun BenchmarkResultsTable(results: List<CpuEfficiencyResult>, modifier: Modifier
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(
-                text = "Detailed Results",
+                text = "详细结果",
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.primary
             )
@@ -308,9 +308,9 @@ fun BenchmarkResultsTable(results: List<CpuEfficiencyResult>, modifier: Modifier
             
             // Header
             Row(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
-                Text("Cluster Freqs (MHz)", style = MaterialTheme.typography.labelLarge, modifier = Modifier.weight(1.5f), fontWeight = FontWeight.Bold)
-                Text("Power (W)", style = MaterialTheme.typography.labelLarge, modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)
-                Text("Score", style = MaterialTheme.typography.labelLarge, modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)
+                Text("集群频率 (MHz)", style = MaterialTheme.typography.labelLarge, modifier = Modifier.weight(1.5f), fontWeight = FontWeight.Bold)
+                Text("功率 (W)", style = MaterialTheme.typography.labelLarge, modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)
+                Text("得分", style = MaterialTheme.typography.labelLarge, modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold)
             }
             HorizontalDivider()
             
