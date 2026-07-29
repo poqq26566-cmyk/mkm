@@ -81,12 +81,12 @@ fun SettingsScreen(
 
     val updateIntervalOptions = remember {
         listOf(
-            "5s" to 5_000L,
-            "10s" to 10_000L,
-            "30s" to 30_000L,
-            "1 min" to 60_000L,
-            "5 min" to 300_000L,
-            "10 min" to 600_000L
+            "5秒" to 5_000L,
+            "10秒" to 10_000L,
+            "30秒" to 30_000L,
+            "1分钟" to 60_000L,
+            "5分钟" to 300_000L,
+            "10分钟" to 600_000L
         )
     }
     var selectedIntervalMs by remember {
@@ -123,13 +123,20 @@ fun SettingsScreen(
             val agoMs = System.currentTimeMillis() - at
             val mins = agoMs / 60_000
             val rel = when {
-                mins < 1L -> "just now"
-                mins < 60L -> "$mins min ago"
-                mins < 1440L -> "${mins / 60L} h ago"
-                else -> "${mins / 1440L} d ago"
+                mins < 1L -> "刚刚"
+                mins < 60L -> "${mins}分钟前"
+                mins < 1440L -> "${mins / 60L}小时前"
+                else -> "${mins / 1440L}天前"
             }
-            "Last reset: $rel (trigger: $trigger)"
-        } ?: "Last reset: never"
+            val triggerZh = when (trigger) {
+                "manual" -> "手动"
+                "unplug" -> "拔出充电器"
+                "full" -> "充满100%"
+                "boot" -> "重启"
+                else -> trigger
+            }
+            "上次重置：$rel（触发方式：$triggerZh）"
+        } ?: "上次重置：从未"
     }
 
     fun toggleBatteryNotification(enabled: Boolean) {
@@ -148,12 +155,12 @@ fun SettingsScreen(
             MediumTopAppBar(
                 navigationIcon = {
                      IconButton(onClick = onOpenDrawer) {
-                        Icon(Icons.Filled.Menu, contentDescription = "Menu")
+                        Icon(Icons.Filled.Menu, contentDescription = "菜单")
                     }
                 },
                 title = {
                     Text(
-                        "Settings",
+                        "设置",
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Black
                     )
@@ -175,9 +182,9 @@ fun SettingsScreen(
         ) {
             item {
                 AppInfoCard(
-                    appName = "Minimal Kernel Manager",
+                    appName = "极简内核管理器",
                     version = "v1.7",
-                    buildDate = "June 16, 2026"
+                    buildDate = "2026年6月16日"
                 )
             }
 
@@ -190,25 +197,25 @@ fun SettingsScreen(
             }
 
             item {
-                SettingsSection(title = "Appearance") {
+                SettingsSection(title = "外观") {
                     SettingsItem(
                         icon = Icons.Default.Palette,
-                        title = "Theme",
+                        title = "主题",
                         subtitle = when(theme) {
-                            AppTheme.SYSTEM -> "System Default"
-                            AppTheme.DYNAMIC -> "Dynamic (Material You)"
-                            AppTheme.LIGHT -> "Light"
-                            AppTheme.DARK -> "Dark"
-                            AppTheme.AMOLED -> "Black (AMOLED)"
-                            AppTheme.NORD -> "Nord Theme"
-                            AppTheme.NORD_LIGHT -> "Nord Light"
+                            AppTheme.SYSTEM -> "跟随系统"
+                            AppTheme.DYNAMIC -> "动态取色（Material You）"
+                            AppTheme.LIGHT -> "浅色"
+                            AppTheme.DARK -> "深色"
+                            AppTheme.AMOLED -> "纯黑（AMOLED）"
+                            AppTheme.NORD -> "Nord 主题"
+                            AppTheme.NORD_LIGHT -> "Nord 浅色"
                             AppTheme.DRACULA -> "Dracula"
                             AppTheme.MONOKAI -> "Monokai"
                             AppTheme.GRUVBOX -> "Gruvbox"
-                            AppTheme.GRUVBOX_LIGHT -> "Gruvbox Light"
-                            AppTheme.SOLARIZED -> "Solarized Dark"
-                            AppTheme.SOLARIZED_LIGHT -> "Solarized Light"
-                            AppTheme.SYNTHWAVE -> "Synthwave (Neon)"
+                            AppTheme.GRUVBOX_LIGHT -> "Gruvbox 浅色"
+                            AppTheme.SOLARIZED -> "Solarized 深色"
+                            AppTheme.SOLARIZED_LIGHT -> "Solarized 浅色"
+                            AppTheme.SYNTHWAVE -> "Synthwave（霓虹）"
                             AppTheme.ONE_LIGHT -> "One Light"
                         },
                         onClick = { showThemeDialog = true }
@@ -219,7 +226,7 @@ fun SettingsScreen(
             // Power Calibration - moved from Overlay page
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                SettingsSection(title = "Power Calibration") {
+                SettingsSection(title = "功率校准") {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -239,7 +246,7 @@ fun SettingsScreen(
                         ) {
                             Column {
                                 Text(
-                                    text = "Raw Power",
+                                    text = "原始功率",
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -252,7 +259,7 @@ fun SettingsScreen(
                             }
                             Column(horizontalAlignment = Alignment.End) {
                                 Text(
-                                    text = "Calibrated (${savedMultiplier}×)",
+                                    text = "校准后 (${savedMultiplier}×)",
                                     style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.primary
                                 )
@@ -266,7 +273,7 @@ fun SettingsScreen(
                         }
                         HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
                         Text(
-                            text = "Calibration Multiplier",
+                            text = "校准系数",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -283,14 +290,14 @@ fun SettingsScreen(
                                     calibrationSaveError = false
                                 },
                                 modifier = Modifier.weight(1f),
-                                label = { Text("Multiplier") },
-                                placeholder = { Text("e.g. 1.1") },
+                                label = { Text("系数") },
+                                placeholder = { Text("例如 1.1") },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                                 singleLine = true,
                                 shape = RoundedCornerShape(12.dp),
                                 isError = calibrationSaveError,
                                 supportingText = if (calibrationSaveError) {
-                                    { Text("Invalid number", color = MaterialTheme.colorScheme.error) }
+                                    { Text("数字无效", color = MaterialTheme.colorScheme.error) }
                                 } else null
                             )
                             FilledTonalIconButton(
@@ -302,14 +309,14 @@ fun SettingsScreen(
                                         userHasEdited = false
                                         calibrationSaveError = false
                                         coroutineScope.launch {
-                                            snackbarHostState.showSnackbar("Multiplier saved: ${v}×")
+                                            snackbarHostState.showSnackbar("系数已保存：${v}×")
                                         }
                                     } else {
                                         calibrationSaveError = true
                                     }
                                 }
                             ) {
-                                Icon(Icons.Default.Save, contentDescription = "Save multiplier")
+                                Icon(Icons.Default.Save, contentDescription = "保存系数")
                             }
                             FilledTonalIconButton(
                                 onClick = {
@@ -317,7 +324,7 @@ fun SettingsScreen(
                                     userHasEdited = false
                                     calibrationSaveError = false
                                     coroutineScope.launch {
-                                        snackbarHostState.showSnackbar("Reset to 1.0×")
+                                        snackbarHostState.showSnackbar("已重置为 1.0×")
                                     }
                                 },
                                 colors = IconButtonDefaults.filledTonalIconButtonColors(
@@ -325,11 +332,11 @@ fun SettingsScreen(
                                     contentColor = MaterialTheme.colorScheme.onErrorContainer
                                 )
                             ) {
-                                Icon(Icons.Default.SettingsBackupRestore, contentDescription = "Reset to 1×")
+                                Icon(Icons.Default.SettingsBackupRestore, contentDescription = "重置为 1×")
                             }
                         }
                         Text(
-                            text = "Saved: ${savedMultiplier}×  •  Match your external power meter.",
+                            text = "已保存：${savedMultiplier}×  •  请与外部功率计对齐。",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.primary.copy(alpha = 0.8f)
                         )
@@ -340,11 +347,11 @@ fun SettingsScreen(
             // Battery Notification Toggle
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                SettingsSection(title = "Notifications") {
+                SettingsSection(title = "通知") {
                     SettingsItem(
                         icon = if (batteryNotificationEnabled) Icons.Default.Notifications else Icons.Default.NotificationsOff,
-                        title = "Battery Monitor",
-                        subtitle = if (batteryNotificationEnabled) "Persistent notification active" else "Tap to enable battery notification",
+                        title = "电池监控",
+                        subtitle = if (batteryNotificationEnabled) "常驻通知已启用" else "点击启用电池通知",
                         onClick = { toggleBatteryNotification(!batteryNotificationEnabled) },
                         trailing = {
                             Switch(
@@ -359,8 +366,8 @@ fun SettingsScreen(
                     // Navigate to full notification customise screen
                     SettingsItem(
                         icon = Icons.Default.Tune,
-                        title = "Customise Notification",
-                        subtitle = "Configure what's shown when charging or discharging",
+                        title = "自定义通知",
+                        subtitle = "配置充电或放电时显示的内容",
                         onClick = onOpenNotificationSettings
                     )
 
@@ -368,13 +375,13 @@ fun SettingsScreen(
 
                     Column(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
                         Text(
-                            text = "Refresh Interval",
+                            text = "刷新间隔",
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         Spacer(modifier = Modifier.height(8.dp))
                         Box {
-                            val currentLabel = updateIntervalOptions.find { it.second == selectedIntervalMs }?.first ?: "30s"
+                            val currentLabel = updateIntervalOptions.find { it.second == selectedIntervalMs }?.first ?: "30秒"
                             AssistChip(
                                 onClick = { showIntervalMenu = true },
                                 label = { Text(currentLabel) },
@@ -414,7 +421,7 @@ fun SettingsScreen(
                         }
                         Spacer(modifier = Modifier.height(4.dp))
                         Text(
-                            text = "Longer intervals reduce battery usage. Default is 30s.",
+                            text = "间隔越长越省电，默认30秒。",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                         )
@@ -425,7 +432,7 @@ fun SettingsScreen(
             // Battery Stats Reset (T1)
             item {
                 Spacer(modifier = Modifier.height(16.dp))
-                SettingsSection(title = "Battery Stats Reset") {
+                SettingsSection(title = "电池统计重置") {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -433,12 +440,17 @@ fun SettingsScreen(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
                         Text(
-                            text = "Auto-reset system battery stats (dumpsys batterystats --reset) for fresh wakelock/UID analysis. Requires root or shizuku.",
+                            text = "自动重置系统电池统计（dumpsys batterystats --reset），以获得全新的唤醒锁/UID分析数据。需要 Root 或 Shizuku 权限。",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                         )
                         Text(
-                            text = "Will use: $resetMethod",
+                            text = "将使用：" + when (resetMethod) {
+                                "shizuku" -> "Shizuku"
+                                "root" -> "Root"
+                                "unavailable" -> "不可用"
+                                else -> "检测中"
+                            },
                             style = MaterialTheme.typography.labelSmall,
                             color = if (resetMethod == "unavailable")
                                 MaterialTheme.colorScheme.error
@@ -451,7 +463,7 @@ fun SettingsScreen(
                             color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
                         )
                         SwitchRow(
-                            label = "Reset on charger unplug",
+                            label = "拔出充电器时重置",
                             checked = resetOnUnplug,
                             onCheckedChange = {
                                 resetOnUnplug = it
@@ -460,7 +472,7 @@ fun SettingsScreen(
                         )
                         HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
                         SwitchRow(
-                            label = "Reset on 100%",
+                            label = "充满100%时重置",
                             checked = resetOnFull,
                             onCheckedChange = {
                                 resetOnFull = it
@@ -469,7 +481,7 @@ fun SettingsScreen(
                         )
                         HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp))
                         SwitchRow(
-                            label = "Reset on reboot",
+                            label = "重启时重置",
                             checked = resetOnBoot,
                             onCheckedChange = {
                                 resetOnBoot = it
@@ -491,9 +503,9 @@ fun SettingsScreen(
                                         if (result.isSuccess) {
                                             BatteryStatsResetPrefs.recordReset(context, "manual")
                                             lastResetTick++
-                                            snackbarHostState.showSnackbar("Battery stats reset")
+                                            snackbarHostState.showSnackbar("电池统计已重置")
                                         } else {
-                                            snackbarHostState.showSnackbar("Reset failed: ${result.stderr.ifBlank { "exit ${result.exitCode}" }}")
+                                            snackbarHostState.showSnackbar("重置失败：${result.stderr.ifBlank { "退出码 ${result.exitCode}" }}")
                                         }
                                     }
                                 }
@@ -504,7 +516,7 @@ fun SettingsScreen(
                                     modifier = Modifier.size(18.dp)
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
-                                Text("Reset now")
+                                Text("立即重置")
                             }
                         }
                     }
@@ -516,22 +528,22 @@ fun SettingsScreen(
                 AboutMeCard(
                     name = "Abhay Raj",
                     handle = "@abhay-byte",
-                    bio = "Passionate about building software, exploring hardware, and all things Linux."
+                    bio = "热衷于软件开发、硬件探索，以及一切与 Linux 相关的事物。"
                 )
             }
 
             item {
-                SettingsSection(title = "Connect With Me") {
+                SettingsSection(title = "联系我") {
                     SocialItem(
                         icon = Icons.Default.Code,
                         label = "GitHub",
-                        description = "View my repositories and projects",
+                        description = "查看我的仓库和项目",
                         onClick = { uriHandler.openUri("https://github.com/abhay-byte") }
                     )
                     SocialItem(
                         icon = Icons.Default.Group,
                         label = "LinkedIn",
-                        description = "Let's connect professionally",
+                        description = "职业社交，欢迎联系",
                         onClick = { uriHandler.openUri("https://www.linkedin.com/in/abhay-byte") }
                     )
                 }
@@ -548,8 +560,8 @@ fun SettingsScreen(
                     )
                 ) {
                     ListItem(
-                        headlineContent = { Text("Star on GitHub", fontWeight = FontWeight.Bold) },
-                        supportingContent = { Text("MKM - If you like this project, please give it a star!") },
+                        headlineContent = { Text("在 GitHub 上点个 Star", fontWeight = FontWeight.Bold) },
+                        supportingContent = { Text("MKM —— 如果你喜欢这个项目，请给它一个 Star！") },
                         leadingContent = {
                             Icon(Icons.Default.Star, contentDescription = null)
                         },
@@ -573,8 +585,8 @@ fun SettingsScreen(
                     )
                 ) {
                     ListItem(
-                        headlineContent = { Text("Join MKM Community", fontWeight = FontWeight.Bold) },
-                        supportingContent = { Text("Chat with other MKM users and developers on Discord") },
+                        headlineContent = { Text("加入 MKM 社区", fontWeight = FontWeight.Bold) },
+                        supportingContent = { Text("在 Discord 上与其他 MKM 用户和开发者交流") },
                         leadingContent = {
                             Icon(
                                 painter = painterResource(R.drawable.ic_discord),
@@ -600,7 +612,7 @@ fun SettingsScreen(
 
     if (showThemeDialog) {
         SelectionBottomSheet(
-            title = "App Theme",
+            title = "应用主题",
             items = AppTheme.values().map { it.name },
             selectedItem = theme.name,
             onDismiss = { showThemeDialog = false },
@@ -610,20 +622,20 @@ fun SettingsScreen(
             },
             itemLabel = {
                 when(AppTheme.valueOf(it)) {
-                    AppTheme.SYSTEM -> "System Default"
-                    AppTheme.DYNAMIC -> "Dynamic (Material You)"
-                    AppTheme.LIGHT -> "Light"
-                    AppTheme.DARK -> "Dark"
-                    AppTheme.AMOLED -> "Black (AMOLED)"
-                    AppTheme.NORD -> "Nord Theme"
-                    AppTheme.NORD_LIGHT -> "Nord Light"
+                    AppTheme.SYSTEM -> "跟随系统"
+                    AppTheme.DYNAMIC -> "动态取色（Material You）"
+                    AppTheme.LIGHT -> "浅色"
+                    AppTheme.DARK -> "深色"
+                    AppTheme.AMOLED -> "纯黑（AMOLED）"
+                    AppTheme.NORD -> "Nord 主题"
+                    AppTheme.NORD_LIGHT -> "Nord 浅色"
                     AppTheme.DRACULA -> "Dracula"
                     AppTheme.MONOKAI -> "Monokai"
                     AppTheme.GRUVBOX -> "Gruvbox"
-                    AppTheme.GRUVBOX_LIGHT -> "Gruvbox Light"
-                    AppTheme.SOLARIZED -> "Solarized Dark"
-                    AppTheme.SOLARIZED_LIGHT -> "Solarized Light"
-                    AppTheme.SYNTHWAVE -> "Synthwave (Neon)"
+                    AppTheme.GRUVBOX_LIGHT -> "Gruvbox 浅色"
+                    AppTheme.SOLARIZED -> "Solarized 深色"
+                    AppTheme.SOLARIZED_LIGHT -> "Solarized 浅色"
+                    AppTheme.SYNTHWAVE -> "Synthwave（霓虹）"
                     AppTheme.ONE_LIGHT -> "One Light"
                 }
             }
