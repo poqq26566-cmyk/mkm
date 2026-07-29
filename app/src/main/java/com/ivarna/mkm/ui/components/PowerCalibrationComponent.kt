@@ -1,3 +1,4 @@
+
 package com.ivarna.mkm.ui.components
 
 import androidx.compose.foundation.layout.*
@@ -49,7 +50,7 @@ fun PowerCalibrationComponent(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "POWER CALIBRATION",
+                    text = "功率校准",
                     style = MaterialTheme.typography.labelLarge,
                     color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.Bold
@@ -58,7 +59,7 @@ fun PowerCalibrationComponent(
                 IconButton(onClick = { multiplierText = "1.0" }) {
                     Icon(
                         Icons.Default.SettingsBackupRestore,
-                        contentDescription = "Reset",
+                        contentDescription = "重置",
                         tint = MaterialTheme.colorScheme.outline
                     )
                 }
@@ -71,8 +72,8 @@ fun PowerCalibrationComponent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                CalibrationDataItem("Raw Current", "${polaritySign}${status.currentUa / 1000} mA")
-                CalibrationDataItem("Raw Voltage", "%.2f V".format(status.voltageUv / 1_000_000f))
+                CalibrationDataItem("原始电流", "${polaritySign}${status.currentUa / 1000} mA")
+                CalibrationDataItem("原始电压", "%.2f V".format(status.voltageUv / 1_000_000f))
             }
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -81,9 +82,9 @@ fun PowerCalibrationComponent(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                CalibrationDataItem("Raw Power", "${polaritySign}%.3f W".format(status.powerW))
+                CalibrationDataItem("原始功率", "${polaritySign}%.3f W".format(status.powerW))
                 CalibrationDataItem(
-                    "Calibrated", 
+                    "校准后", 
                     "${polaritySign}%.3f W".format(calibratedPower),
                     valueColor = MaterialTheme.colorScheme.primary
                 )
@@ -94,7 +95,7 @@ fun PowerCalibrationComponent(
             Spacer(modifier = Modifier.height(24.dp))
 
             Text(
-                text = "Calibration Multiplier",
+                text = "校准系数",
                 style = MaterialTheme.typography.labelMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -114,13 +115,13 @@ fun PowerCalibrationComponent(
                         saveError = false
                     },
                     modifier = Modifier.weight(1f),
-                    label = { Text("Multiplier (e.g. 1.1)") },
+                    label = { Text("系数（例如 1.1）") },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     singleLine = true,
                     shape = RoundedCornerShape(12.dp),
                     isError = saveError,
                     supportingText = if (saveError) {
-                        { Text("Invalid number", color = MaterialTheme.colorScheme.error) }
+                        { Text("数字无效", color = MaterialTheme.colorScheme.error) }
                     } else null
                 )
                 
@@ -144,13 +145,13 @@ fun PowerCalibrationComponent(
                 ) {
                     Icon(Icons.Default.Save, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Save")
+                    Text("保存")
                 }
             }
             
             Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = "Adjust the multiplier to match external power meter readings.",
+                text = "调整系数以匹配外部功率计的读数。",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f)
             )
