@@ -33,8 +33,8 @@ fun UfsTuningCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                  Column(modifier = Modifier.weight(1f)) {
-                    val title = if (ufs.isSupported) "Controller: ${ufs.controllerPath.substringAfterLast("/")}" else "UFS Controller"
-                    val subtitle = if (ufs.isSupported) ufs.controllerPath else "Not detected or not supported"
+                    val title = if (ufs.isSupported) "控制器：${ufs.controllerPath.substringAfterLast("/")}" else "UFS 控制器"
+                    val subtitle = if (ufs.isSupported) ufs.controllerPath else "未检测到或不支持"
                     
                     Text(
                         text = title,
@@ -54,7 +54,7 @@ fun UfsTuningCard(
                 Spacer(modifier = Modifier.height(16.dp))
                 
                 Text(
-                    text = "Frequency Governor",
+                    text = "频率调速器",
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.secondary
                 )
@@ -72,7 +72,7 @@ fun UfsTuningCard(
                         readOnly = true,
                         value = ufs.currentGovernor,
                         onValueChange = {},
-                        label = { Text("Select Mode") },
+                        label = { Text("选择模式") },
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                         colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
                     )
@@ -96,14 +96,14 @@ fun UfsTuningCard(
                 if (ufs.availableFrequencies.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "Frequencies",
+                        text = "频率",
                         style = MaterialTheme.typography.labelMedium,
                         color = MaterialTheme.colorScheme.secondary
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     
                     Text(
-                        text = "Current: ${ufs.currentFreq}",
+                        text = "当前：${ufs.currentFreq}",
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Bold
                     )
@@ -122,7 +122,7 @@ fun UfsTuningCard(
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             Text(
-                                text = "Changing frequencies may cause instability or crashes.",
+                                text = "修改频率可能导致系统不稳定或崩溃。",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onErrorContainer
                             )
@@ -143,7 +143,7 @@ fun UfsTuningCard(
                             readOnly = true,
                             value = ufs.minFreq,
                             onValueChange = {},
-                            label = { Text("Min Frequency") },
+                            label = { Text("最低频率") },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = minExpanded) },
                             colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
                         )
@@ -178,7 +178,7 @@ fun UfsTuningCard(
                             readOnly = true,
                             value = ufs.maxFreq,
                             onValueChange = {},
-                            label = { Text("Max Frequency") },
+                            label = { Text("最高频率") },
                             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = maxExpanded) },
                             colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
                         )
@@ -203,7 +203,7 @@ fun UfsTuningCard(
                 if (ufs.availableGovernors.isEmpty()) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        text = "No governors found. This usually means the app was denied Root access.",
+                        text = "未找到调速器，通常是因为App未获得 Root 权限。",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.error
                     )
@@ -216,7 +216,7 @@ fun UfsTuningCard(
                         ) {
                             Column(modifier = Modifier.padding(8.dp)) {
                                 Text(
-                                    text = "Debug Info:",
+                                    text = "调试信息：",
                                     style = MaterialTheme.typography.labelSmall,
                                     fontWeight = FontWeight.Bold
                                 )
@@ -235,7 +235,7 @@ fun UfsTuningCard(
             } else {
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
-                    text = "Could not find a supported UFS controller on this device. ensure you have Root access.",
+                    text = "在此设备上未找到受支持的 UFS 控制器，请确认已获得 Root 权限。",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.error
                 )
