@@ -91,10 +91,10 @@ fun PermissionRequestScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Shizuku Permission") },
+                title = { Text("Shizuku 权限") },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.Default.ArrowBack, contentDescription = "返回")
                     }
                 }
             )
@@ -118,12 +118,12 @@ fun PermissionRequestScreen(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        "Shizuku Not Installed",
+                        "Shizuku 未安装",
                         style = MaterialTheme.typography.headlineSmall
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "Please install Shizuku to use this feature without root access.",
+                        "请安装 Shizuku 以在无 Root 权限的情况下使用此功能。",
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center
                     )
@@ -136,7 +136,7 @@ fun PermissionRequestScreen(
                             context.startActivity(intent)
                         }
                     ) {
-                        Text("Download Shizuku")
+                        Text("下载 Shizuku")
                     }
                 }
 
@@ -149,12 +149,12 @@ fun PermissionRequestScreen(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        "Shizuku is Hidden",
+                        "Shizuku 已隐藏",
                         style = MaterialTheme.typography.headlineSmall
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "Shizuku appears to be hidden from the system but its service is running. You can still grant permission to MKM.",
+                        "Shizuku 似乎已从系统中隐藏，但其服务仍在运行。你仍可以为 MKM 授权。",
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center
                     )
@@ -162,7 +162,7 @@ fun PermissionRequestScreen(
                     Button(
                         onClick = { ShizukuManager.requestPermission() }
                     ) {
-                        Text("Grant Permission")
+                        Text("授予权限")
                     }
                 }
                 
@@ -175,12 +175,12 @@ fun PermissionRequestScreen(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        "Shizuku Not Running",
+                        "Shizuku 未运行",
                         style = MaterialTheme.typography.headlineSmall
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "Shizuku is installed but the service is not running. Please open Shizuku and start the service.",
+                        "Shizuku 已安装但服务未运行。请打开 Shizuku 并启动服务。",
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center
                     )
@@ -200,7 +200,7 @@ fun PermissionRequestScreen(
                             }
                         }
                     ) {
-                        Text("Open Shizuku")
+                        Text("打开 Shizuku")
                     }
                 }
                 
@@ -213,12 +213,12 @@ fun PermissionRequestScreen(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        "Permission Required",
+                        "需要权限",
                         style = MaterialTheme.typography.headlineSmall
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "MKM needs Shizuku permission to manage system settings.",
+                        "MKM 需要 Shizuku 权限才能管理系统设置。",
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center
                     )
@@ -226,7 +226,7 @@ fun PermissionRequestScreen(
                     Button(
                         onClick = { ShizukuManager.requestPermission() }
                     ) {
-                        Text("Grant Permission")
+                        Text("授予权限")
                     }
                 }
                 
@@ -239,12 +239,12 @@ fun PermissionRequestScreen(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        "Permission Granted",
+                        "权限已授予",
                         style = MaterialTheme.typography.headlineSmall
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "Setting up...",
+                        "正在设置…",
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center
                     )
@@ -260,22 +260,22 @@ fun PermissionRequestScreen(
                     )
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
-                        "Permission Denied",
+                        "权限被拒绝",
                         style = MaterialTheme.typography.headlineSmall
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        "MKM cannot function without Shizuku permission. You can still use root access if available.",
+                        "没有 Shizuku 权限，MKM 将无法正常工作。如果可用，你仍可以使用 Root 权限。",
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center
                     )
                     Spacer(modifier = Modifier.height(24.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         OutlinedButton(onClick = onNavigateBack) {
-                            Text("Cancel")
+                            Text("取消")
                         }
                         Button(onClick = { ShizukuManager.requestPermission() }) {
-                            Text("Try Again")
+                            Text("重试")
                         }
                     }
                 }
@@ -283,7 +283,7 @@ fun PermissionRequestScreen(
                 PermissionStatus.Checking -> {
                     CircularProgressIndicator()
                     Spacer(modifier = Modifier.height(16.dp))
-                    Text("Checking status...")
+                    Text("正在检查状态…")
                 }
             }
         }
@@ -307,7 +307,7 @@ fun AccessMethodCard(
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
             Text(
-                "Access Method",
+                "访问方式",
                 style = MaterialTheme.typography.titleLarge
             )
             
@@ -320,13 +320,13 @@ fun AccessMethodCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    "Current Method:",
+                    "当前方式：",
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Text(
                     when (accessMethod) {
                         com.ivarna.mkm.shell.ShellManager.AccessMethod.ROOT -> "Root"
-                        com.ivarna.mkm.shell.ShellManager.AccessMethod.LOCAL -> "None"
+                        com.ivarna.mkm.shell.ShellManager.AccessMethod.LOCAL -> "无"
                     },
                     style = MaterialTheme.typography.bodyLarge,
                     color = when (accessMethod) {
@@ -342,14 +342,14 @@ fun AccessMethodCard(
             val shizukuHidden = ShizukuManager.isHidden()
             AccessMethodItem(
                 icon = Icons.Default.Security,
-                title = if (shizukuHidden) "Shizuku (Hidden)" else "Shizuku",
+                title = if (shizukuHidden) "Shizuku（已隐藏）" else "Shizuku",
                 status = when {
-                    ShizukuManager.hasPermission() -> "Active"
-                    shizukuHidden -> "Hidden — tap to grant"
-                    !ShizukuManager.isInstalled() -> "Not Installed"
-                    !ShizukuManager.isRunning() -> "Not Running"
-                    !ShizukuManager.hasPermission() -> "Not Permitted"
-                    else -> "Active"
+                    ShizukuManager.hasPermission() -> "已启用"
+                    shizukuHidden -> "已隐藏 — 点击授权"
+                    !ShizukuManager.isInstalled() -> "未安装"
+                    !ShizukuManager.isRunning() -> "未运行"
+                    !ShizukuManager.hasPermission() -> "未授权"
+                    else -> "已启用"
                 },
                 statusColor = when {
                     ShizukuManager.hasPermission() -> MaterialTheme.colorScheme.primary
@@ -373,7 +373,7 @@ fun AccessMethodCard(
             AccessMethodItem(
                 icon = Icons.Default.Security,
                 title = "Root",
-                status = if (com.topjohnwu.superuser.Shell.getShell().isRoot) "Active" else "Not Available",
+                status = if (com.topjohnwu.superuser.Shell.getShell().isRoot) "已启用" else "不可用",
                 statusColor = if (com.topjohnwu.superuser.Shell.getShell().isRoot) {
                     MaterialTheme.colorScheme.primary
                 } else {
